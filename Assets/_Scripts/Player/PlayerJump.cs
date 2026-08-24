@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,13 +16,16 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private PlayerInputs inputHandler;
 
-    public GroundCheck groundCheck;
+    public bool canJump = false;
 
     private Vector2 moveInput;
 
     public bool chargingJump;
     public float chargeTimer;
     public float jumpPower;
+
+    //true for charging, false for releasing
+    public event Action<bool> AnnounceChargingJump; 
     
     private void OnEnable()
     {
@@ -48,9 +52,16 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
+    public void FlipCanJump(bool input)
+    {
+        canJump = input;
+    }
+
     private void HandleJump(InputAction.CallbackContext context)
     {
-
+        if (!canJump)
+            return;
+        
         if (context.performed)
         {
             StartCharging();
@@ -67,6 +78,7 @@ public class PlayerJump : MonoBehaviour
         chargingJump = true;
         chargeTimer = 0f;
         jumpPower = minJumpPower;
+        AnnounceChargingJump?.Invoke(true);
     }
 
     private void ReleaseJump()
@@ -111,6 +123,8 @@ public class PlayerJump : MonoBehaviour
 
         chargeTimer = 0f;
         jumpPower = minJumpPower;
+        
+        AnnounceChargingJump?.Invoke(false);
     }
     
     private void OnDisable()
