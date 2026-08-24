@@ -12,9 +12,7 @@ public class Ledge : MonoBehaviour
       if (playerBrain == null)
          return;
 
-      if (playerBrain.currentState != PlayerStates.StickingToWall)
-         return;
-
-      playerBrain.StartLedgeClimb(associatedGroundPoint);
+      if (playerBrain.currentState == PlayerStates.StickingToWall || playerBrain.currentState == PlayerStates.Jumping)
+         playerBrain.StartLedgeClimb(associatedGroundPoint);
    }
 }

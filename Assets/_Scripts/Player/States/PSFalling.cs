@@ -5,6 +5,7 @@ public class PSFalling: PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
+        playerBrain.rb.useGravity = true;
         playerBrain.playerJump.FlipCanJump(false);
         playerBrain.playerMovement.readingUpDown = false;
         playerBrain.playerMovement.readingLeftRight = false;

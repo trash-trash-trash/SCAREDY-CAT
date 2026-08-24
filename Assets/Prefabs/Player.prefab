@@ -600,7 +600,7 @@ MonoBehaviour:
   checkRadius: 0.2
   layerToTarget:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   targetLayerDetected: 0
 --- !u!1 &3403407241781054392
 GameObject:
