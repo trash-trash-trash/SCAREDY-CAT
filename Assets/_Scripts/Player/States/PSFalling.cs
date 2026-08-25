@@ -15,11 +15,13 @@ public class PSFalling: PlayerStateBase
     {
         if(playerBrain.leftWallCheck.targetLayerDetected )
         {
+            playerBrain.leftWall = true;
             playerBrain.currentWallCheck  = playerBrain.leftWallCheck;
             playerBrain.ChangeState(PlayerStates.StickingToWall);
         }
         else if (playerBrain.rightWallCheck.targetLayerDetected)
         {
+            playerBrain.leftWall = false;
             playerBrain.currentWallCheck  = playerBrain.rightWallCheck;
             playerBrain.ChangeState(PlayerStates.StickingToWall);
         }

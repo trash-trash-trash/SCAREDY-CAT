@@ -20,6 +20,7 @@ public class PlayerView : MonoBehaviour
     public AnimationClip chargeJumpClip;
     public AnimationClip jumpingClip;
     public AnimationClip fallingClip;
+    public AnimationClip climbingClip;
     
     public Dictionary<PlayerStates, AnimationClip> animationClipsDict =  new Dictionary<PlayerStates, AnimationClip>();
     void Awake()
@@ -29,6 +30,7 @@ public class PlayerView : MonoBehaviour
         animationClipsDict.Add(PlayerStates.Jumping, jumpingClip);
         animationClipsDict.Add(PlayerStates.ChargingJump,  chargeJumpClip);
         animationClipsDict.Add(PlayerStates.Falling, fallingClip);
+        animationClipsDict.Add(PlayerStates.StickingToWall, climbingClip);
         
         if (playerBrain.testing)
         {
@@ -55,6 +57,14 @@ public class PlayerView : MonoBehaviour
         if(animationClipsDict.TryGetValue(newState, out AnimationClip clip))
         {
             playerAnimator.Play(clip.name);
+
+            if (newState == PlayerStates.ClimbingUpLedge)
+            {
+                if(playerBrain.leftWall)
+                    spriteObj.transform.eulerAngles = new Vector3(0, 180, 0);
+                else
+                    spriteObj.transform.eulerAngles = new Vector3(0, 0, 0);
+            }
         }
         
         //no hiding animation as of yet

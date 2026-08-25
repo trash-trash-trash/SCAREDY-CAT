@@ -258,6 +258,7 @@ MonoBehaviour:
   chargingWallJumpObj: {fileID: 6245066914688282681}
   climbingUpLedgeObj: {fileID: 5518011235266464150}
   hidingObj: {fileID: 6554962292149369971}
+  currentHidingSpot: {fileID: 0}
   testing: 1
 --- !u!114 &7788490759542600297
 MonoBehaviour:
@@ -307,7 +308,7 @@ MonoBehaviour:
   minJumpPower: 75
   maxJumpPower: 150
   minHorizontalPower: 50
-  maxHorizontalPower: 100
+  maxHorizontalPower: 150
   chargeTime: 1
   rb: {fileID: 9133485802910940409}
   inputHandler: {fileID: 760805259577654629}
@@ -404,8 +405,8 @@ Rigidbody:
   m_GameObject: {fileID: 1246168887792113172}
   serializedVersion: 5
   m_Mass: 5
-  m_LinearDamping: 1
-  m_AngularDamping: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1200,6 +1201,7 @@ MonoBehaviour:
   chargeJumpClip: {fileID: 7400000, guid: c5b51833bc2040342b9b65e81fbc2843, type: 2}
   jumpingClip: {fileID: 7400000, guid: 55e4f5611ee7d42478f5c7a79f5cb63c, type: 2}
   fallingClip: {fileID: 7400000, guid: 59dea829c0251c0479185322ec860e81, type: 2}
+  climbingClip: {fileID: 7400000, guid: dfe32cbc2982ece44a82fb64fbe4e123, type: 2}
 --- !u!1 &6554962292149369971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,6 +1247,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PSHide
   playerBrain: {fileID: 0}
+  hideDuration: 0.3
+  hopHeight: 0.2
 --- !u!1 &6822596624412398903
 GameObject:
   m_ObjectHideFlags: 0

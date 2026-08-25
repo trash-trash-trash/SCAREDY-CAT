@@ -7,6 +7,8 @@ public class PSClimbingUpLedge : PlayerStateBase
     private Vector3 startPosition;
     private Vector3 targetPosition;
     private float timer;
+    
+    
 
     public override void OnEnable()
     {

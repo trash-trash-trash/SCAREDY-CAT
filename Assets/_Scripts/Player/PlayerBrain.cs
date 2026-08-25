@@ -33,6 +33,8 @@ public class PlayerBrain : MonoBehaviour
 
     public bool canHide = false;
     public bool hiding = false;
+
+    public bool leftWall = false;
     
     public PlayerStates currentState = PlayerStates.Idle;
     private GameObject prevObj;

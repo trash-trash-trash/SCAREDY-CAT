@@ -15,6 +15,7 @@ public class PSHiding : PlayerStateBase
         playerBrain.rb.useGravity = false;
         playerBrain.hiding = true;
         playerBrain.playerJump.FlipCanJump(false);
+        playerBrain.playerMovement.readingLeftRight = false;
 
         timer = 0f;
 

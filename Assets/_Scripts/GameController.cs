@@ -7,6 +7,5 @@ public class GameController : MonoBehaviour
    public void StartGame()
    {
       playerBrain.ChangeState(PlayerStates.Idle);
-      Debug.Log("STARTED");
    }
 }
