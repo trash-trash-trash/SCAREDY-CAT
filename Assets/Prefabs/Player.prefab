@@ -545,6 +545,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5443443645311290234}
+  - component: {fileID: 367281899828863006}
   m_Layer: 0
   m_Name: InMenu
   m_TagString: Untagged
@@ -567,6 +568,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1525341013064817299}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &367281899828863006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2292201877937729937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e16e9807eb33e478e4e26dc0fc3224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PSInMenu
+  playerBrain: {fileID: 0}
 --- !u!1 &2305140745315496292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1048,9 @@ MonoBehaviour:
   playerAnimator: {fileID: 7548173401927548416}
   idleClip: {fileID: 7400000, guid: fd4c6b71619a0814fbb7fe3ff0477adc, type: 2}
   walkingClip: {fileID: 7400000, guid: 6cc2b879eeb9f724fbbd1e155776f033, type: 2}
+  chargeJumpClip: {fileID: 7400000, guid: c5b51833bc2040342b9b65e81fbc2843, type: 2}
   jumpingClip: {fileID: 7400000, guid: 55e4f5611ee7d42478f5c7a79f5cb63c, type: 2}
+  fallingClip: {fileID: 7400000, guid: 59dea829c0251c0479185322ec860e81, type: 2}
 --- !u!1 &6822596624412398903
 GameObject:
   m_ObjectHideFlags: 0

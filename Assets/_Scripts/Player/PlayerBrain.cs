@@ -60,8 +60,8 @@ public class PlayerBrain : MonoBehaviour
         statesDict.Add(PlayerStates.StickingToWall, stickingToWallObj);
         statesDict.Add(PlayerStates.ChargingWallJump,  chargingWallJumpObj);
         statesDict.Add(PlayerStates.ClimbingUpLedge, climbingUpLedgeObj);
-
-        ChangeState(PlayerStates.Idle);
+        
+        ChangeState(PlayerStates.InMenu);
     }
 
     public void ChangeState(PlayerStates newState)

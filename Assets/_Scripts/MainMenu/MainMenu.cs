@@ -13,6 +13,8 @@ public enum MainMenuStates
 
 public class MainMenu : MonoBehaviour
 {
+    public GameController gameController;
+    
     public MainMenuStates currentState = MainMenuStates.PressStart;
 
     private GameObject prevObj;
@@ -60,6 +62,7 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         ChangeState(MainMenuStates.InGame);
+        gameController.StartGame();
     }
 
     public void Options()

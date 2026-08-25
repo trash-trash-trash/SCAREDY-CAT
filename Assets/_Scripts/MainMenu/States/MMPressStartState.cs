@@ -12,6 +12,7 @@ public class MMPressStartState : MonoBehaviour
 
    private void OnDisable()
    {
-      pressStartObj.SetActive(false);
+      if(pressStartObj != null)
+         pressStartObj.SetActive(false);
    }
 }

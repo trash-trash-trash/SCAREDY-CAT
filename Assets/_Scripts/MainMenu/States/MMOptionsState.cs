@@ -11,6 +11,7 @@ public class MMOptionsState : MonoBehaviour
 
     void OnDisable()
     {
-        optionsObj.SetActive(false);
+        if(optionsObj!=null)
+            optionsObj.SetActive(false);
     }
 }

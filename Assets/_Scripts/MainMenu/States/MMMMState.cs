@@ -11,6 +11,7 @@ public class MMMMState : MonoBehaviour
 
    private void OnDisable()
    {
-      mainMenuObj.SetActive(false);
+      if(mainMenuObj != null)
+         mainMenuObj.SetActive(false);
    }
 }

@@ -11,6 +11,7 @@ public class MMQuitState : MonoBehaviour
 
    void OnDisable()
    {
-      quitObj.SetActive(false);
+      if(quitObj!=null)
+         quitObj.SetActive(false);
    }
 }

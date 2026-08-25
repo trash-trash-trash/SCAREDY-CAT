@@ -14,7 +14,9 @@ public class PlayerView : MonoBehaviour
     public Animator playerAnimator;
     public AnimationClip idleClip;
     public AnimationClip walkingClip;
+    public AnimationClip chargeJumpClip;
     public AnimationClip jumpingClip;
+    public AnimationClip fallingClip;
     
     public Dictionary<PlayerStates, AnimationClip> animationClipsDict =  new Dictionary<PlayerStates, AnimationClip>();
     void Awake()
@@ -22,6 +24,8 @@ public class PlayerView : MonoBehaviour
         animationClipsDict.Add(PlayerStates.Idle, idleClip);
         animationClipsDict.Add(PlayerStates.Walking, walkingClip);
         animationClipsDict.Add(PlayerStates.Jumping, jumpingClip);
+        animationClipsDict.Add(PlayerStates.ChargingJump,  chargeJumpClip);
+        animationClipsDict.Add(PlayerStates.Falling, fallingClip);
         
         if (playerBrain.testing)
         {

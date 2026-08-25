@@ -51,9 +51,6 @@ public class PlayerInputs : MonoBehaviour
     private void OnEnable()
     {
         controls.Player.Enable();
-
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = false;
     }
 
     // ------------------------------------------------------------------------
