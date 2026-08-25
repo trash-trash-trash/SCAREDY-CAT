@@ -1737,6 +1737,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ledge
   associatedGroundPoint: {fileID: 820467858}
+--- !u!23 &1313052697 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1583812465557471653, guid: e4045960e67354544ad381d54206b844, type: 3}
+  m_PrefabInstance: {fileID: 8596129982502230613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1411096649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1809,6 +1814,7 @@ MonoBehaviour:
   - {fileID: 667131201}
   - {fileID: 1614443960}
   - {fileID: 2019641779}
+  - {fileID: 1313052697}
 --- !u!1 &1458360960
 GameObject:
   m_ObjectHideFlags: 0
@@ -2720,9 +2726,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1704463527}
     m_Modifications:
+    - target: {fileID: 2209637544407490364, guid: 23d673f6c16a676428fdf8d165754738, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3879833438583785300, guid: 23d673f6c16a676428fdf8d165754738, type: 3}
       propertyPath: m_Name
       value: LedgeSphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402665603338805239, guid: 23d673f6c16a676428fdf8d165754738, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.054
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402665603338805239, guid: 23d673f6c16a676428fdf8d165754738, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.158
       objectReference: {fileID: 0}
     - target: {fileID: 8490993403043742841, guid: 23d673f6c16a676428fdf8d165754738, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2780,6 +2798,18 @@ PrefabInstance:
     - target: {fileID: 384299058151878119, guid: e4045960e67354544ad381d54206b844, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140416277413123128, guid: e4045960e67354544ad381d54206b844, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140416277413123128, guid: e4045960e67354544ad381d54206b844, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1140416277413123128, guid: e4045960e67354544ad381d54206b844, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1246168887792113172, guid: e4045960e67354544ad381d54206b844, type: 3}
       propertyPath: m_Name

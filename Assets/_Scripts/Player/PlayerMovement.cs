@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public PlayerInputs playerInputs;
     
     public Rigidbody rb;
-    private Vector2 moveInput;
+    public Vector2 moveInput;
 
     public bool readingLeftRight = false;
     public bool readingUpDown = false;
