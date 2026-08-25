@@ -5,6 +5,9 @@ public class PSChargingWallJump : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
+        
+        playerBrain.rb.angularVelocity = Vector3.zero;
+        playerBrain.rb.linearVelocity = Vector3.zero;
         playerBrain.playerMovement.readingUpDown = false;
         playerBrain.playerJump.AnnounceChargingJump += ChangeState;
     }
@@ -17,6 +20,7 @@ public class PSChargingWallJump : PlayerStateBase
 
     void OnDisable()
     {
+        playerBrain.playerJump.AnnounceChargingJump -= ChangeState;
         playerBrain.rb.useGravity = true;
     }
 }
