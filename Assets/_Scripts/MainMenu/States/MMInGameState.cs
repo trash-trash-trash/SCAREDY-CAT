@@ -1,12 +1,14 @@
 using UnityEngine;
 
-public class MMInGameState : MonoBehaviour
+public class MMInGameState : MainMenuStateBase
 {
     public GameObject mainMenuObj;
 
-    void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         mainMenuObj.SetActive(false);
+        mainMenu.gameController.StartGame();
     }
 
     void OnDisable()

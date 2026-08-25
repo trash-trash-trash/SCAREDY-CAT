@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class MMOptionsState : MonoBehaviour
+public class MMOptionsState : MainMenuStateBase
 {
     public GameObject optionsObj;
 
-    void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
         optionsObj.SetActive(true);
     }
 

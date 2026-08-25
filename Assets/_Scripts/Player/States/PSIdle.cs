@@ -23,7 +23,7 @@ public class PSIdle : PlayerStateBase
         if (!playerBrain.groundCheck.targetLayerDetected)
             playerBrain.ChangeState(PlayerStates.Falling);
         
-        if (playerBrain.playerMovement.moveInput != Vector2.zero)
+        if (Mathf.Abs(playerBrain.playerMovement.moveInput.x) > 0.01f)
             playerBrain.ChangeState(PlayerStates.Walking);
     }
 

@@ -1,18 +1,19 @@
 using System;
 using UnityEngine;
 
-public class MMPressStartState : MonoBehaviour
+public class MMPressStartState : MainMenuStateBase
 {
-   public GameObject pressStartObj;
-   
-   void OnEnable()
-   {
-      pressStartObj.SetActive(true);
-   }
+    public GameObject pressStartObj;
 
-   private void OnDisable()
-   {
-      if(pressStartObj != null)
-         pressStartObj.SetActive(false);
-   }
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        pressStartObj.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        if (pressStartObj != null)
+            pressStartObj.SetActive(false);
+    }
 }

@@ -1,17 +1,19 @@
 using System;
 using UnityEngine;
 
-public class MMMMState : MonoBehaviour
+public class MMMMState : MainMenuStateBase
 {
-   public GameObject mainMenuObj;
-   private void OnEnable()
-   {
-      mainMenuObj.SetActive(true);
-   }
+    public GameObject mainMenuObj;
 
-   private void OnDisable()
-   {
-      if(mainMenuObj != null)
-         mainMenuObj.SetActive(false);
-   }
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        mainMenuObj.SetActive(true);
+    }
+
+    private void OnDisable()
+    {
+        if (mainMenuObj != null)
+            mainMenuObj.SetActive(false);
+    }
 }

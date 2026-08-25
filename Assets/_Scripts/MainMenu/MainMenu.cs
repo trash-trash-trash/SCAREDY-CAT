@@ -28,6 +28,8 @@ public class MainMenu : MonoBehaviour
 
     public event Action<MainMenuStates> AnnounceMainMenuState;
 
+    public bool testingGameplay = false;
+
     void OnEnable()
     {
         statesDict.Add(MainMenuStates.InGame, inGameObj);
@@ -36,7 +38,11 @@ public class MainMenu : MonoBehaviour
         statesDict.Add(MainMenuStates.Options, optionsObj);
         statesDict.Add(MainMenuStates.Quit, QuitObj);
 
-        ChangeState(MainMenuStates.PressStart);
+        if(testingGameplay)
+            ChangeState(MainMenuStates.InGame);
+        
+        else
+            ChangeState(MainMenuStates.PressStart);
     }
 
     public void ChangeState(MainMenuStates newState)
@@ -62,17 +68,11 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         ChangeState(MainMenuStates.InGame);
-        gameController.StartGame();
     }
 
     public void Options()
     {
         ChangeState(MainMenuStates.Options);
-    }
-
-    public void Meow()
-    {
-        Debug.Log("MEOW!!!");
     }
 
     public void Quit()

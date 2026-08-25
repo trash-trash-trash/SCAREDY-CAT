@@ -7,6 +7,9 @@ public class PlayerView : MonoBehaviour
     public PlayerBrain playerBrain;
 
     public GameObject spriteObj;
+
+    public GameObject canHidePromptObj;
+    public TMP_Text canHideText;
     
     public GameObject testCanvasObj;
     public TMP_Text playerStateText;
@@ -34,6 +37,15 @@ public class PlayerView : MonoBehaviour
         }
         
         playerBrain.AnnouncePlayerState += SetPlayerState;
+        playerBrain.AnnounceCanHide += SetCanHidePrompt;
+    }
+
+    private void SetCanHidePrompt(bool input)
+    {
+        if(input)
+            canHidePromptObj.SetActive(true);
+        else
+            canHidePromptObj.SetActive(false);
     }
 
     private void SetPlayerState(PlayerStates newState)
@@ -44,9 +56,19 @@ public class PlayerView : MonoBehaviour
         {
             playerAnimator.Play(clip.name);
         }
+        
+        //no hiding animation as of yet
+        if (newState == PlayerStates.Hiding)
+        {
+            canHideText.text = "E - EXIT";
+        }
+        else
+        {
+            canHideText.text = "E - HIDE";
+        }
     }
     
-    //flip sprite according to rb movement
+    //flip sprite according to rb movement, probably not the way to go
 
     void Update()
     {

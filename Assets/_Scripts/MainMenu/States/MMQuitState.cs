@@ -1,11 +1,12 @@
 using UnityEngine;
 
-public class MMQuitState : MonoBehaviour
+public class MMQuitState : MainMenuStateBase
 {
    public GameObject quitObj;
 
-   void OnEnable()
+   public override void OnEnable()
    {
+      base.OnEnable();
       quitObj.SetActive(true);
    }
 

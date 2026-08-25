@@ -12,7 +12,8 @@ public enum PlayerStates
     Falling,
     StickingToWall,
     ChargingWallJump,
-    ClimbingUpLedge
+    ClimbingUpLedge,
+    Hiding
 }
 
 public class PlayerBrain : MonoBehaviour
@@ -29,6 +30,9 @@ public class PlayerBrain : MonoBehaviour
     public Rigidbody rb;
     
     public Transform ledgeTarget;
+
+    public bool canHide = false;
+    public bool hiding = false;
     
     public PlayerStates currentState = PlayerStates.Idle;
     private GameObject prevObj;
@@ -41,15 +45,20 @@ public class PlayerBrain : MonoBehaviour
     public GameObject stickingToWallObj;
     public GameObject chargingWallJumpObj;
     public GameObject climbingUpLedgeObj;
+    public GameObject hidingObj;
 
     public Dictionary<PlayerStates, GameObject> statesDict =
         new Dictionary<PlayerStates, GameObject>();
 
+    public HidingSpot currentHidingSpot;
+    
     public event Action<PlayerStates> AnnouncePlayerState;
+
+    public event Action<bool> AnnounceCanHide;
 
     public bool testing = false;
 
-    private void OnEnable()
+    private void Awake()
     {
         statesDict.Add(PlayerStates.Idle, idleObj);
         statesDict.Add(PlayerStates.InMenu, inMenuObj);
@@ -60,6 +69,7 @@ public class PlayerBrain : MonoBehaviour
         statesDict.Add(PlayerStates.StickingToWall, stickingToWallObj);
         statesDict.Add(PlayerStates.ChargingWallJump,  chargingWallJumpObj);
         statesDict.Add(PlayerStates.ClimbingUpLedge, climbingUpLedgeObj);
+        statesDict.Add(PlayerStates.Hiding, hidingObj);
         
         ChangeState(PlayerStates.InMenu);
     }
@@ -84,5 +94,11 @@ public class PlayerBrain : MonoBehaviour
     {
         ledgeTarget = target;
         ChangeState(PlayerStates.ClimbingUpLedge);
+    }
+
+    public void FlipCanHide(bool input)
+    {
+        canHide = input;
+        AnnounceCanHide?.Invoke(canHide);
     }
 }

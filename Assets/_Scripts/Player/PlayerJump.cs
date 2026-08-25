@@ -14,7 +14,7 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float chargeTime = 1f;
 
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private PlayerInputs inputHandler;
+    public PlayerInputs inputHandler;
 
     public bool canJump = false;
 
