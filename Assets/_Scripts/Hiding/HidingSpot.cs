@@ -17,7 +17,7 @@ public class HidingSpot : MonoBehaviour
 
         playerBrain.currentHidingSpot = this;
         
-        if(!playerBrain.canHide) 
+        if(!playerBrain.canHide)
             playerBrain.FlipCanHide(true);
     }
 

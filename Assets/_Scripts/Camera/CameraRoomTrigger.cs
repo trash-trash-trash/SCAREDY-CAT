@@ -4,11 +4,12 @@ public class CameraRoomTrigger : MonoBehaviour
 {
     public Transform cameraPosition;
     
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerStay(Collider other)
     {
         if (other.GetComponent<PlayerMovement>())
         {
-            CameraController.Instance.MoveToRoom(cameraPosition);
+            if(CameraController.Instance.target!= cameraPosition)
+                CameraController.Instance.MoveToRoom(cameraPosition);
         }
     }
 }

@@ -25,7 +25,7 @@ public class HandOfGod : MonoBehaviour
     public void StartCountdown()
     {
         if (testing)
-            timeTilNextAppearance = 40;
+            timeTilNextAppearance = 30;
         
         else
         {
