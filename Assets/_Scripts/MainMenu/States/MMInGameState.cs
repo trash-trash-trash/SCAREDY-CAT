@@ -8,7 +8,6 @@ public class MMInGameState : MainMenuStateBase
     {
         base.OnEnable();
         mainMenuObj.SetActive(false);
-        mainMenu.gameController.StartGame();
     }
 
     void OnDisable()

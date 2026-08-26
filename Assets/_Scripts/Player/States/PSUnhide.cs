@@ -22,6 +22,8 @@ public class PSUnhide : PlayerStateBase
 
         startPosition = playerBrain.rb.position;
         targetPosition = playerBrain.positionBeforeHiding;
+        
+        playerBrain.IAmHidingNow(false);
     }
 
     private void FixedUpdate()

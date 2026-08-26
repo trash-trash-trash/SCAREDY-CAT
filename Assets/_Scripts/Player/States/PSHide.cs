@@ -46,6 +46,7 @@ public class PSHiding : PlayerStateBase
         if (t >= 1f)
         {
             playerBrain.rb.position = targetPosition;
+            playerBrain.IAmHidingNow(true);
         }
     }
 

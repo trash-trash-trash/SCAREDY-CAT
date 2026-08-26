@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
@@ -8,6 +9,10 @@ public class Health : MonoBehaviour
     public bool canTakeDamage = true;
 
     public bool isAlive = false;
+
+    public event Action AnnounceTakeDamage;
+    
+    public event Action AnnounceDeath;
 
     void Awake()
     {
@@ -21,6 +26,9 @@ public class Health : MonoBehaviour
 
     public void ChangeHealth(int amount)
     {
+        if (amount < 0)
+            AnnounceTakeDamage?.Invoke();
+        
         int health = currentHealth + amount;
         if (health > maxHealth)
             health = maxHealth;
@@ -31,8 +39,17 @@ public class Health : MonoBehaviour
         currentHealth = health;
 
         if (currentHealth <= 0)
+        {
             isAlive = false;
+            AnnounceDeath?.Invoke();
+        }
+        
         else
             isAlive = true;
+    }
+
+    public void Hit()
+    {
+        ChangeHealth(-1);
     }
 }

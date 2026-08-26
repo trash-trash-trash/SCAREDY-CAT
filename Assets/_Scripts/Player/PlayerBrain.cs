@@ -16,7 +16,8 @@ public enum PlayerStates
     ChargingWallJump,
     ClimbingUpLedge,
     Hiding,
-    Unhiding
+    Unhiding,
+    TakeDamage
 }
 
 public class PlayerBrain : MonoBehaviour
@@ -59,6 +60,7 @@ public class PlayerBrain : MonoBehaviour
     public GameObject climbingUpLedgeObj;
     public GameObject hidingObj;
     public GameObject unhidingObj;
+    public GameObject takeDamageObj;
 
     public Dictionary<PlayerStates, GameObject> statesDict =
         new Dictionary<PlayerStates, GameObject>();
@@ -68,6 +70,8 @@ public class PlayerBrain : MonoBehaviour
     public event Action<PlayerStates> AnnouncePlayerState;
 
     public event Action<bool> AnnounceCanHide;
+
+    public event Action<bool> AnnounceHidden;
 
     public bool naomiTesting = false;
 
@@ -88,12 +92,20 @@ public class PlayerBrain : MonoBehaviour
         statesDict.Add(PlayerStates.ClimbingUpLedge, climbingUpLedgeObj);
         statesDict.Add(PlayerStates.Hiding, hidingObj);
         statesDict.Add(PlayerStates.Unhiding, unhidingObj);
+        statesDict.Add(PlayerStates.TakeDamage, takeDamageObj);
+
+        health.AnnounceTakeDamage += TakeDamage;
         
         if(naomiTesting)
             ChangeState(PlayerStates.Idle);
         
         else
             ChangeState(PlayerStates.InMenu);
+    }
+
+    private void TakeDamage()
+    {
+        ChangeState(PlayerStates.TakeDamage);
     }
 
     public void ChangeState(PlayerStates newState)
@@ -122,5 +134,10 @@ public class PlayerBrain : MonoBehaviour
     {
         canHide = input;
         AnnounceCanHide?.Invoke(canHide);
+    }
+
+    public void IAmHidingNow(bool input)
+    {
+        AnnounceHidden?.Invoke(input);
     }
 }
