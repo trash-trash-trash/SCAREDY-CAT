@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PSHiding : PlayerStateBase
+public class PSUnhide : PlayerStateBase
 {
     [SerializeField] private float hideDuration = 0.3f;
     [SerializeField] private float hopHeight = 0.2f;
@@ -21,8 +21,7 @@ public class PSHiding : PlayerStateBase
         timer = 0f;
 
         startPosition = playerBrain.rb.position;
-        playerBrain.positionBeforeHiding = startPosition;
-        targetPosition = playerBrain.currentHidingSpot.transform.position;
+        targetPosition = playerBrain.positionBeforeHiding;
     }
 
     private void FixedUpdate()
@@ -46,6 +45,7 @@ public class PSHiding : PlayerStateBase
         if (t >= 1f)
         {
             playerBrain.rb.position = targetPosition;
+            playerBrain.ChangeState(PlayerStates.Idle);
         }
     }
 

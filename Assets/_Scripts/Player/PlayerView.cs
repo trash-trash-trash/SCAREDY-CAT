@@ -17,6 +17,8 @@ public class PlayerView : MonoBehaviour
     public Animator playerAnimator;
     public AnimationClip idleClip;
     public AnimationClip walkingClip;
+    public AnimationClip chargingAttackClip;
+    public AnimationClip attackingClip;
     public AnimationClip chargeJumpClip;
     public AnimationClip jumpingClip;
     public AnimationClip fallingClip;
@@ -28,6 +30,8 @@ public class PlayerView : MonoBehaviour
         animationClipsDict.Add(PlayerStates.Idle, idleClip);
         animationClipsDict.Add(PlayerStates.Walking, walkingClip);
         animationClipsDict.Add(PlayerStates.Jumping, jumpingClip);
+        animationClipsDict.Add(PlayerStates.ChargingAttack, chargingAttackClip);
+        animationClipsDict.Add(PlayerStates.Attacking, attackingClip);
         animationClipsDict.Add(PlayerStates.ChargingJump,  chargeJumpClip);
         animationClipsDict.Add(PlayerStates.Falling, fallingClip);
         animationClipsDict.Add(PlayerStates.StickingToWall, climbingClip);
@@ -95,5 +99,6 @@ public class PlayerView : MonoBehaviour
     void OnDisable()
     {
         playerBrain.AnnouncePlayerState -= SetPlayerState;
+        playerBrain.AnnounceCanHide -= SetCanHidePrompt;
     }
 }

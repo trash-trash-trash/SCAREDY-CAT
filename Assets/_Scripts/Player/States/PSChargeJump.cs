@@ -5,6 +5,7 @@ public class PSChargeJump : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
+        playerBrain.playerAttack.FlipCanAttack(false);
         playerBrain.rb.angularVelocity = Vector3.zero;
         playerBrain.rb.linearVelocity = Vector3.zero;
         playerBrain.playerMovement.readingLeftRight = false;

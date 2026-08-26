@@ -25,7 +25,7 @@ public class PlayerHide : MonoBehaviour
          }
          else
          {
-            playerBrain.ChangeState(PlayerStates.Idle);
+            playerBrain.ChangeState(PlayerStates.Unhiding);
          }
       }
    }

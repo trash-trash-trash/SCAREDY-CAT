@@ -7,17 +7,23 @@ public enum PlayerStates
     Idle,
     InMenu,
     Walking,
+    ChargingAttack,
+    Attacking,
     ChargingJump,
     Jumping,
     Falling,
     StickingToWall,
     ChargingWallJump,
     ClimbingUpLedge,
-    Hiding
+    Hiding,
+    Unhiding
 }
 
 public class PlayerBrain : MonoBehaviour
 {
+    public Health health;
+    
+    public PlayerAttack playerAttack;
     public PlayerMovement playerMovement;
     public PlayerJump playerJump;
     
@@ -30,6 +36,8 @@ public class PlayerBrain : MonoBehaviour
     public Rigidbody rb;
     
     public Transform ledgeTarget;
+    
+    public Vector3 positionBeforeHiding = Vector3.zero;
 
     public bool canHide = false;
     public bool hiding = false;
@@ -41,6 +49,8 @@ public class PlayerBrain : MonoBehaviour
     [Header("Player State Objects")] public GameObject idleObj;
     public GameObject inMenuObj;
     public GameObject walkingObj;
+    public GameObject chargingAttackObj;
+    public GameObject attackObj;
     public GameObject chargingJumpObj;
     public GameObject jumpingObj;
     public GameObject fallingObj;
@@ -48,6 +58,7 @@ public class PlayerBrain : MonoBehaviour
     public GameObject chargingWallJumpObj;
     public GameObject climbingUpLedgeObj;
     public GameObject hidingObj;
+    public GameObject unhidingObj;
 
     public Dictionary<PlayerStates, GameObject> statesDict =
         new Dictionary<PlayerStates, GameObject>();
@@ -64,6 +75,8 @@ public class PlayerBrain : MonoBehaviour
     {
         statesDict.Add(PlayerStates.Idle, idleObj);
         statesDict.Add(PlayerStates.InMenu, inMenuObj);
+        statesDict.Add(PlayerStates.ChargingAttack, chargingAttackObj);
+        statesDict.Add(PlayerStates.Attacking, attackObj);
         statesDict.Add(PlayerStates.Walking, walkingObj);
         statesDict.Add(PlayerStates.ChargingJump, chargingJumpObj);
         statesDict.Add(PlayerStates.Jumping, jumpingObj);
@@ -72,6 +85,7 @@ public class PlayerBrain : MonoBehaviour
         statesDict.Add(PlayerStates.ChargingWallJump,  chargingWallJumpObj);
         statesDict.Add(PlayerStates.ClimbingUpLedge, climbingUpLedgeObj);
         statesDict.Add(PlayerStates.Hiding, hidingObj);
+        statesDict.Add(PlayerStates.Unhiding, unhidingObj);
         
         ChangeState(PlayerStates.InMenu);
     }

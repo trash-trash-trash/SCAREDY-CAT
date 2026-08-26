@@ -5,14 +5,22 @@ public class PSIdle : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
+        playerBrain.playerAttack.FlipCanAttack(true);
         playerBrain.playerJump.FlipCanJump(true);
         playerBrain.rb.useGravity = true;
         playerBrain.playerMovement.readingUpDown = false;
         playerBrain.playerMovement.readingLeftRight = true;
-        playerBrain.playerJump.AnnounceChargingJump += ChangeState;
+        playerBrain.playerJump.AnnounceChargingJump += ChangeJumpState;
+        playerBrain.playerAttack.AnnounceChargingAttack += ChangeAttackState;
     }
 
-    private void ChangeState(bool chargingJump)
+    private void ChangeAttackState(bool chargingAttack)
+    {
+        if(chargingAttack)
+            playerBrain.ChangeState(PlayerStates.ChargingAttack);
+    }
+
+    private void ChangeJumpState(bool chargingJump)
     {
         if (chargingJump)
             playerBrain.ChangeState(PlayerStates.ChargingJump);
@@ -29,6 +37,7 @@ public class PSIdle : PlayerStateBase
 
     void OnDisable()
     {
-        playerBrain.playerJump.AnnounceChargingJump -= ChangeState;
+        playerBrain.playerAttack.AnnounceChargingAttack -= ChangeAttackState;
+        playerBrain.playerJump.AnnounceChargingJump -= ChangeJumpState;
     }
 }

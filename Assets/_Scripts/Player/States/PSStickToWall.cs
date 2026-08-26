@@ -5,6 +5,7 @@ public class PSStickToWall : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
+        playerBrain.playerAttack.FlipCanAttack(false);
         playerBrain.playerJump.FlipCanJump(true);
         playerBrain.playerMovement.readingLeftRight = false;
         playerBrain.playerMovement.readingUpDown = true;

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5047394037193736655}
   - component: {fileID: 9164958276462170071}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ChargingJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6250921414210670263}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CanHidePrompt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 3022132802606283578}
   - component: {fileID: 6233926788059547765}
   - component: {fileID: 2442616342541609842}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,6 +167,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1525341013064817299}
   - component: {fileID: 760805259577654629}
+  - component: {fileID: 912075515894246914}
+  - component: {fileID: 3285464024608032691}
   - component: {fileID: 1371361712377967622}
   - component: {fileID: 7788490759542600297}
   - component: {fileID: 7231984317659276689}
@@ -175,7 +177,7 @@ GameObject:
   - component: {fileID: 1583812465557471653}
   - component: {fileID: 6644165534788745837}
   - component: {fileID: 9133485802910940409}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,6 +204,8 @@ Transform:
   - {fileID: 6519633954609314167}
   - {fileID: 5443443645311290234}
   - {fileID: 79558245572024179}
+  - {fileID: 2453328004160387426}
+  - {fileID: 1101220262462734001}
   - {fileID: 5047394037193736655}
   - {fileID: 3061212393804972332}
   - {fileID: 3029238455381823668}
@@ -209,6 +213,7 @@ Transform:
   - {fileID: 5323229965120560219}
   - {fileID: 2038850642681394087}
   - {fileID: 3715795433409304970}
+  - {fileID: 3463426571157434780}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &760805259577654629
@@ -225,6 +230,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInputs
   moveInput: {x: 0, y: 0}
   lookInput: {x: 0, y: 0}
+--- !u!114 &912075515894246914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246168887792113172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef27bb6d75de42448eea4defa0616c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  minAttackPower: 5
+  maxAttackPower: 20
+  chargeTime: 1
+  maxAttackRadius: 2
+  attackOffset: 1
+  attackLayers:
+    serializedVersion: 2
+    m_Bits: 1463
+  maxTargets: 32
+  inputHandler: {fileID: 760805259577654629}
+  lastAttackDirection: 1
+  canAttack: 1
+  chargingAttack: 0
+  chargeTimer: 0
+  attackPower: 0
+--- !u!114 &3285464024608032691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246168887792113172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdecca6be313e34448ff94341c5c9142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
+  currentHealth: 0
+  canTakeDamage: 1
+  isAlive: 0
 --- !u!114 &1371361712377967622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,6 +285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a871f9b3ca1780d48b6811c7678556be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBrain
+  health: {fileID: 3285464024608032691}
+  playerAttack: {fileID: 912075515894246914}
   playerMovement: {fileID: 7788490759542600297}
   playerJump: {fileID: 2393563587163485447}
   groundCheck: {fileID: 8980497948031161952}
@@ -245,6 +295,7 @@ MonoBehaviour:
   currentWallCheck: {fileID: 0}
   rb: {fileID: 9133485802910940409}
   ledgeTarget: {fileID: 0}
+  positionBeforeHiding: {x: 0, y: 0, z: 0}
   canHide: 0
   hiding: 0
   leftWall: 0
@@ -252,6 +303,8 @@ MonoBehaviour:
   idleObj: {fileID: 8588172375209221844}
   inMenuObj: {fileID: 2292201877937729937}
   walkingObj: {fileID: 1449614536518860563}
+  chargingAttackObj: {fileID: 2993503232138776029}
+  attackObj: {fileID: 8935434806347679766}
   chargingJumpObj: {fileID: 289861314264590222}
   jumpingObj: {fileID: 3687619554552654949}
   fallingObj: {fileID: 7143090737710602478}
@@ -259,6 +312,7 @@ MonoBehaviour:
   chargingWallJumpObj: {fileID: 6245066914688282681}
   climbingUpLedgeObj: {fileID: 5518011235266464150}
   hidingObj: {fileID: 6554962292149369971}
+  unhidingObj: {fileID: 8052941471017389102}
   currentHidingSpot: {fileID: 0}
   testing: 1
 --- !u!114 &7788490759542600297
@@ -435,7 +489,7 @@ GameObject:
   - component: {fileID: 4838377309447499933}
   - component: {fileID: 5557557762215775594}
   - component: {fileID: 193276523482486377}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 79558245572024179}
   - component: {fileID: 2438990685884701858}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Walking
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 969037699572846016}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TestState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +647,7 @@ GameObject:
   - component: {fileID: 4888565653956108305}
   - component: {fileID: 8450001529675756090}
   - component: {fileID: 8762269415710906513}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -695,7 +749,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5443443645311290234}
   - component: {fileID: 367281899828863006}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -740,7 +794,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3967288096671780472}
   - component: {fileID: 8980497948031161952}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -780,6 +834,51 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   targetLayerDetected: 0
+--- !u!1 &2993503232138776029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2453328004160387426}
+  - component: {fileID: 4464731063936918807}
+  m_Layer: 3
+  m_Name: ChargingAttack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2453328004160387426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2993503232138776029}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1525341013064817299}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4464731063936918807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2993503232138776029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744739a332c3f3845aa01cd3e3df1d46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PSChargeAttack
+  playerBrain: {fileID: 0}
 --- !u!1 &3403407241781054392
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,7 +889,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3646415073894813727}
   - component: {fileID: 1274297654669487349}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WallCheckLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -840,7 +939,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3061212393804972332}
   - component: {fileID: 7100157782985643648}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Jumping
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -889,7 +988,7 @@ GameObject:
   - component: {fileID: 1001156077412222895}
   - component: {fileID: 7548173401927548416}
   - component: {fileID: 930207509863314016}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PlayerSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1014,7 +1113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2861665086612383187}
   - component: {fileID: 6343487755325947788}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WallCheckRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1064,7 +1163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2038850642681394087}
   - component: {fileID: 6909698143774575120}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ClimbingUpLedge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1110,7 +1209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5323229965120560219}
   - component: {fileID: 2827482624789535077}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ChargingWallJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1155,7 +1254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1140416277413123128}
   - component: {fileID: 7560695494382075826}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1199,6 +1298,8 @@ MonoBehaviour:
   playerAnimator: {fileID: 7548173401927548416}
   idleClip: {fileID: 7400000, guid: fd4c6b71619a0814fbb7fe3ff0477adc, type: 2}
   walkingClip: {fileID: 7400000, guid: 6cc2b879eeb9f724fbbd1e155776f033, type: 2}
+  chargingAttackClip: {fileID: 7400000, guid: fb895d4941f7e834eb8592f6e42c3e23, type: 2}
+  attackingClip: {fileID: 7400000, guid: 4a3bdd532100d4a49b3e0b7c40b36a08, type: 2}
   chargeJumpClip: {fileID: 7400000, guid: c5b51833bc2040342b9b65e81fbc2843, type: 2}
   jumpingClip: {fileID: 7400000, guid: 55e4f5611ee7d42478f5c7a79f5cb63c, type: 2}
   fallingClip: {fileID: 7400000, guid: 59dea829c0251c0479185322ec860e81, type: 2}
@@ -1213,7 +1314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3715795433409304970}
   - component: {fileID: 8131383438761240942}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Hiding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1260,7 +1361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7665728598910665457}
   - component: {fileID: 4717062669707826730}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StickingToWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1305,7 +1406,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3029238455381823668}
   - component: {fileID: 6088532843656101069}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Falling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1351,7 +1452,7 @@ GameObject:
   - component: {fileID: 4563362341344270320}
   - component: {fileID: 5277342166846808265}
   - component: {fileID: 6944370425945329712}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TestStateText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1477,6 +1578,53 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &8052941471017389102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3463426571157434780}
+  - component: {fileID: 6990201078527525164}
+  m_Layer: 3
+  m_Name: Unhiding
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3463426571157434780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8052941471017389102}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1525341013064817299}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6990201078527525164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8052941471017389102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce507214ef9032143b391d4496a07753, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PSUnhide
+  playerBrain: {fileID: 0}
+  hideDuration: 0.3
+  hopHeight: 0.2
 --- !u!1 &8588172375209221844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,7 +1635,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6519633954609314167}
   - component: {fileID: 9057781130508066046}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1533,7 +1681,7 @@ GameObject:
   - component: {fileID: 5842627443952289247}
   - component: {fileID: 4417893437778980783}
   - component: {fileID: 5674701964328072228}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CanHideText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1659,3 +1807,49 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &8935434806347679766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1101220262462734001}
+  - component: {fileID: 8084091959767963797}
+  m_Layer: 3
+  m_Name: Attacking
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1101220262462734001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8935434806347679766}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1525341013064817299}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8084091959767963797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8935434806347679766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0e750d29afc5094aa90ed4ae6cced24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PSAttack
+  playerBrain: {fileID: 0}
+  attackDuration: 0.3

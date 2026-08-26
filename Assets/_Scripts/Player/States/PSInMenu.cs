@@ -5,6 +5,7 @@ public class PSInMenu : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
+        playerBrain.playerAttack.FlipCanAttack(false);
         playerBrain.playerJump.FlipCanJump(false);
         playerBrain.rb.useGravity = false;
         playerBrain.playerMovement.readingUpDown = false;

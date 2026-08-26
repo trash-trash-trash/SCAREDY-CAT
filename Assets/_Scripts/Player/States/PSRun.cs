@@ -5,11 +5,19 @@ public class PSRun : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
+        playerBrain.playerAttack.FlipCanAttack(true);
         playerBrain.playerJump.FlipCanJump(true);
         playerBrain.rb.useGravity = true;
         playerBrain.playerMovement.readingUpDown = false;
         playerBrain.playerMovement.readingLeftRight = true;
         playerBrain.playerJump.AnnounceChargingJump += ChangeState;
+        playerBrain.playerAttack.AnnounceChargingAttack += ChangeAttackState;
+    }
+    
+    private void ChangeAttackState(bool chargingAttack)
+    {
+        if(chargingAttack)
+            playerBrain.ChangeState(PlayerStates.ChargingAttack);
     }
     
     private void ChangeState(bool chargingJump)
@@ -30,5 +38,6 @@ public class PSRun : PlayerStateBase
     void OnDisable()
     {
         playerBrain.playerJump.AnnounceChargingJump -= ChangeState;
+        playerBrain.playerAttack.AnnounceChargingAttack -= ChangeAttackState;
     }
 }
