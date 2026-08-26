@@ -19,6 +19,8 @@ public class PlayerInputs : MonoBehaviour
     public event Action<InputAction.CallbackContext> AnnouncePreviousAction;
     public event Action<InputAction.CallbackContext> AnnounceNextAction;
     public event Action<InputAction.CallbackContext> AnnounceSprintAction;
+    
+    public event Action<InputAction.CallbackContext> AnnouncePause;
 
 
     private void Awake()
@@ -45,6 +47,9 @@ public class PlayerInputs : MonoBehaviour
 
         controls.Player.Jump.performed += OnJump;
         controls.Player.Jump.canceled += OnJump;
+
+        controls.Player.Pause.performed += OnPause;
+        controls.Player.Pause.canceled += OnPause;
     }
 
 
@@ -134,6 +139,11 @@ public class PlayerInputs : MonoBehaviour
     private void OnSprint(InputAction.CallbackContext context)
     {
         AnnounceSprintAction?.Invoke(context);
+    }
+
+    private void OnPause(InputAction.CallbackContext context)
+    {
+        AnnouncePause?.Invoke(context);
     }
     
     private void OnDisable()

@@ -254,6 +254,7 @@ MonoBehaviour:
     m_Bits: 1463
   maxTargets: 32
   inputHandler: {fileID: 760805259577654629}
+  playerMovement: {fileID: 7788490759542600297}
   lastAttackDirection: 1
   canAttack: 1
   chargingAttack: 0
@@ -337,6 +338,7 @@ MonoBehaviour:
   moveInput: {x: 0, y: 0}
   readingLeftRight: 0
   readingUpDown: 0
+  facingDirection: 1
   playerJump: {fileID: 2393563587163485447}
 --- !u!114 &7231984317659276689
 MonoBehaviour:
@@ -375,6 +377,7 @@ MonoBehaviour:
   chargingJump: 0
   chargeTimer: 0
   jumpPower: 0
+  playerMovement: {fileID: 7788490759542600297}
 --- !u!33 &1643886955077875713
 MeshFilter:
   m_ObjectHideFlags: 0

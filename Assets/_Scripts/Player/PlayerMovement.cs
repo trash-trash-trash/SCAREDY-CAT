@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     public bool readingLeftRight = false;
     public bool readingUpDown = false;
     
+    public float facingDirection = 1f;
+    
     public PlayerJump playerJump;
     
     private void Awake()
@@ -25,6 +27,11 @@ public class PlayerMovement : MonoBehaviour
     private void HandleMoveInput(Vector2 input)
     {
         moveInput = input;
+        
+        if (moveInput.x > 0.01f)
+            facingDirection = 1f;
+        else if (moveInput.x < -0.01f)
+            facingDirection = -1f;
     }
 
     private void FixedUpdate()
@@ -32,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
         //walkin' around
         if (readingLeftRight)
         {
+
             rb.linearVelocity = new Vector2(
                 moveInput.x * moveSpeed,
                 rb.linearVelocity.y

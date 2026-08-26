@@ -19,6 +19,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private int maxTargets = 32;
 
     public PlayerInputs inputHandler;
+    public PlayerMovement playerMovement;
+    
     public float lastAttackDirection = 1f;
     public bool canAttack = true;
 
@@ -49,7 +51,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (Mathf.Abs(moveInput.x) > 0.01f)
         {
-            lastAttackDirection = Mathf.Sign(moveInput.x);
+            lastAttackDirection = Mathf.Sign(playerMovement.facingDirection);
         }
 
         if (chargingAttack)

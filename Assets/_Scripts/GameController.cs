@@ -1,10 +1,13 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
-   public PlayerBrain playerBrain;
+   //mixing model / view but fuck it game jam we ball
+   
+   public PlayerInputs playerInput;
    public HandOfGod handOfGod;
    public MainMenu mainMenu;
 
@@ -15,10 +18,32 @@ public class GameController : MonoBehaviour
 
    public TMP_Text godIsComingText;
 
+   public bool paused = false;
+   public GameObject pausedObj;
+
    void Start()
    {
       handOfGod.AnnounceWarning += FadeTextInOut;
       mainMenu.AnnounceMainMenuState += StartGame;
+      playerInput.AnnouncePause += PauseUnpause;
+   }
+
+   private void PauseUnpause(InputAction.CallbackContext context)
+   {
+      if(context.performed)
+      {
+         paused = !paused;
+         if (paused)
+         {
+            pausedObj.SetActive(true);
+            Time.timeScale = 0f;
+         }
+         else
+         {
+            pausedObj.SetActive(false);
+            Time.timeScale = 1f;
+         }
+      }
    }
 
    private void FadeTextInOut()
@@ -64,6 +89,7 @@ public class GameController : MonoBehaviour
 
    void OnDisable()
    {
+      playerInput.AnnouncePause -= PauseUnpause;
       handOfGod.AnnounceWarning -= FadeTextInOut;
       mainMenu.AnnounceMainMenuState -= StartGame;
    }

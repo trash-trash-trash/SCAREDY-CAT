@@ -12,10 +12,7 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float maxHorizontalPower = 10f;
     
     [SerializeField] private float chargeTime = 1f;
-
-    [SerializeField] private Rigidbody rb;
-    public PlayerInputs inputHandler;
-
+    
     public bool canJump = false;
 
     private Vector2 moveInput;
@@ -23,6 +20,10 @@ public class PlayerJump : MonoBehaviour
     public bool chargingJump;
     public float chargeTimer;
     public float jumpPower;
+    
+   [SerializeField] private Rigidbody rb;
+    public PlayerInputs inputHandler;
+    public PlayerMovement playerMovement;
 
     //true for charging, false for releasing
     public event Action<bool> AnnounceChargingJump; 
