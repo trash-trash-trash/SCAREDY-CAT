@@ -69,6 +69,8 @@ public class PlayerBrain : MonoBehaviour
 
     public event Action<bool> AnnounceCanHide;
 
+    public bool naomiTesting = false;
+
     public bool testing = false;
 
     private void Awake()
@@ -87,7 +89,11 @@ public class PlayerBrain : MonoBehaviour
         statesDict.Add(PlayerStates.Hiding, hidingObj);
         statesDict.Add(PlayerStates.Unhiding, unhidingObj);
         
-        ChangeState(PlayerStates.InMenu);
+        if(naomiTesting)
+            ChangeState(PlayerStates.Idle);
+        
+        else
+            ChangeState(PlayerStates.InMenu);
     }
 
     public void ChangeState(PlayerStates newState)
