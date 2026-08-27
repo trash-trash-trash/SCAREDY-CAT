@@ -15,9 +15,9 @@ public class PlayerHide : MonoBehaviour
    {
       if (!playerBrain.canHide)
          return;
-
+      
       if (playerBrain.currentState != PlayerStates.Idle &&
-          playerBrain.currentState != PlayerStates.Walking)
+          playerBrain.currentState != PlayerStates.Walking && playerBrain.currentState != PlayerStates.Hiding)
          return;
          
       if (obj.performed)

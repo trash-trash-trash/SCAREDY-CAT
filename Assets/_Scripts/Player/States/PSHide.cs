@@ -12,6 +12,7 @@ public class PSHiding : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
+        playerBrain.canHide = false;
         playerBrain.playerAttack.FlipCanAttack(false);
         playerBrain.rb.useGravity = false;
         playerBrain.hiding = true;
@@ -47,6 +48,8 @@ public class PSHiding : PlayerStateBase
         {
             playerBrain.rb.position = targetPosition;
             playerBrain.IAmHidingNow(true);
+            
+            playerBrain.canHide = true;
         }
     }
 
