@@ -5,15 +5,9 @@ public class PSDeath : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
-        playerBrain.playerLives.LoseALife();
-
-        if (playerBrain.playerLives.currentLives <= 0)
-        {
-            //GameOver
-        }
-        else
-        {
-            //Teleport to last checkpoint
-        }
+        playerBrain.playerJump.FlipCanJump(false);
+        playerBrain.playerAttack.FlipCanAttack(false);
+        playerBrain.playerMovement.readingLeftRight = false;
+        playerBrain.playerMovement.readingUpDown = false;
     }
 }

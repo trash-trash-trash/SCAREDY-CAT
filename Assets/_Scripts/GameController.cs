@@ -6,10 +6,14 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
    //mixing model / view but fuck it game jam we ball
+
+   public CheckPoint originalCheckPoint;
    
+   public PlayerBrain playerBrain;
    public PlayerInputs playerInput;
    public HandOfGod handOfGod;
    public MainMenu mainMenu;
+   public YouDied youDied;
 
    public bool startedGame = false;
 
@@ -24,8 +28,35 @@ public class GameController : MonoBehaviour
    void Start()
    {
       handOfGod.AnnounceWarning += FadeTextInOut;
+      handOfGod.AnnounceArrival += CheckPlayerHidden;
       mainMenu.AnnounceMainMenuState += StartGame;
       playerInput.AnnouncePause += PauseUnpause;
+      playerBrain.health.AnnounceDeath += BENDROWNED;
+   }
+
+   private void BENDROWNED()
+   {
+      youDied.BENDROWNED();
+   }
+
+   public void Reset()
+   {
+      youDied.BENGOTCPR();
+      
+      if(playerBrain.mostRecentCheckPoint != null)
+         playerBrain.transform.position = playerBrain.mostRecentCheckPoint.teleportPoint.transform.position;
+      else
+         playerBrain.transform.position = originalCheckPoint.teleportPoint.transform.position;
+      
+      playerBrain.ChangeState(PlayerStates.Idle);
+   }
+
+   private void CheckPlayerHidden()
+   {
+      if (playerBrain.currentState != PlayerStates.Hiding)
+      {
+         playerBrain.health.ChangeHealth(-777);
+      }
    }
 
    private void PauseUnpause(InputAction.CallbackContext context)
@@ -92,5 +123,6 @@ public class GameController : MonoBehaviour
       playerInput.AnnouncePause -= PauseUnpause;
       handOfGod.AnnounceWarning -= FadeTextInOut;
       mainMenu.AnnounceMainMenuState -= StartGame;
+      playerBrain.health.AnnounceDeath -= BENDROWNED;
    }
 }

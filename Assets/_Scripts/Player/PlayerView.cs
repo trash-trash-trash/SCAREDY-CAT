@@ -118,13 +118,19 @@ public class PlayerView : MonoBehaviour
     //     }
     // }
 
+    //only flip during said states
     void Update()
     {
-        spriteObj.transform.eulerAngles = new Vector3(
-            0,
-            playerBrain.playerMovement.facingDirection == 1f ? 0f : 180f,
-            0
-        );
+        if (playerBrain.currentState == PlayerStates.Walking ||
+            playerBrain.currentState == PlayerStates.ChargingAttack ||
+            playerBrain.currentState == PlayerStates.ChargingJump)
+        {
+            spriteObj.transform.eulerAngles = new Vector3(
+                0,
+                playerBrain.playerMovement.facingDirection == 1f ? 0f : 180f,
+                0
+            );
+        }
     }
 
     void OnDisable()

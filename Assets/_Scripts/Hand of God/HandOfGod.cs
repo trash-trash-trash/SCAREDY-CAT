@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class HandOfGod : MonoBehaviour
 {
+    public Transform playerTransform;
+    public Transform handOfGodTransform;
+
+    public float yOffsetFollowing;
+    public float zOffsetFollowing;
+    
     public float currentTime;
 
     public float countdownEndTime;
@@ -25,6 +31,13 @@ public class HandOfGod : MonoBehaviour
     private Coroutine countdownCoroutine;
 
     public bool isPaused = false;
+    
+    public float yOffsetClose = 10f;
+    public float godDepartureDuration = 2f;
+
+    private bool isDeparting;
+    
+    private Coroutine departureCoroutine;
 
     public void StartCountdown()
     {
@@ -48,13 +61,38 @@ public class HandOfGod : MonoBehaviour
         countdownCoroutine = StartCoroutine(Countdown());
     }
 
+
     private void Update()
     {
+        float currentYOffset = yOffsetFollowing;
+
+        if (!isDeparting && currentTime <= godIsComingWarning)
+        {
+            float progress = 1f - (currentTime / godIsComingWarning);
+
+            currentYOffset = Mathf.Lerp(
+                yOffsetFollowing,
+                yOffsetClose,
+                progress
+            );
+        }
+
+        handOfGodTransform.position = new Vector3(
+            playerTransform.position.x,
+            playerTransform.position.y + currentYOffset,
+            playerTransform.position.z + zOffsetFollowing
+        );
+
         if (!isPaused)
         {
-            currentTime = Mathf.Max(0f, countdownEndTime - Time.time);
+            currentTime = Mathf.Max(
+                0f,
+                countdownEndTime - Time.time
+            );
         }
     }
+
+
 
     public void PauseCountdown()
     {
@@ -122,7 +160,41 @@ public class HandOfGod : MonoBehaviour
         currentTime = 0f;
 
         AnnounceArrival?.Invoke();
+        
+        StartCoroutine(MoveHandAway());
 
         StartCountdown();
+    }
+    
+    private IEnumerator MoveHandAway()
+    {
+        isDeparting = true;
+
+        float elapsed = 0f;
+
+        while (elapsed < godDepartureDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            float progress = Mathf.Clamp01(
+                elapsed / godDepartureDuration
+            );
+
+            float currentYOffset = Mathf.Lerp(
+                yOffsetClose,
+                yOffsetFollowing,
+                progress
+            );
+
+            handOfGodTransform.position = new Vector3(
+                playerTransform.position.x,
+                playerTransform.position.y + currentYOffset,
+                playerTransform.position.z + zOffsetFollowing
+            );
+
+            yield return null;
+        }
+
+        isDeparting = false;
     }
 }

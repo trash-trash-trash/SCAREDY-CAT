@@ -45,6 +45,8 @@ public class DogBrain : MonoBehaviour
     public float damageFlashDuration = 0.7f;
     public float damageFlashInterval = 0.05f;
 
+    public bool defeated = false;
+    
     public event Action<DogStates> AnnounceDogState;
 
     public event Action AnnounceFightStarted;
@@ -67,6 +69,9 @@ public class DogBrain : MonoBehaviour
 
     private void TakeDamage()
     {
+        if (defeated)
+            return;
+        
         health.FlipCanTakeDamage(false);
         StartCoroutine(DamageFlash());
     }

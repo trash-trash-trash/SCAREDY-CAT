@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,9 +19,11 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private LayerMask attackLayers;
     [SerializeField] private int maxTargets = 32;
 
+    public GameObject attackVisual;
+    public float attackVisualTime = 0.3f;
     public PlayerInputs inputHandler;
     public PlayerMovement playerMovement;
-    
+
     public float lastAttackDirection = 1f;
     public bool canAttack = true;
 
@@ -31,6 +34,8 @@ public class PlayerAttack : MonoBehaviour
     public float attackPower;
 
     private Collider[] attackResults;
+
+    private Coroutine attackVisualCoroutine;
 
     // true = charging, false = released
     public event Action<bool> AnnounceChargingAttack;
@@ -161,13 +166,36 @@ public class PlayerAttack : MonoBehaviour
                 continue;
 
             health.ChangeHealth(attackDamage);
-            Debug.Log("Changed "+hit.name+" health by "+attackDamage);
+            Debug.Log("Changed " + hit.name + " health by " + attackDamage);
         }
+        ShowAttackVisual(attackCenter);
 
         Debug.Log(
             $"Attack! Direction: {direction}, Power: {power}, Radius: {attackRadius}, Hits: {hitCount}"
         );
     }
+
+    private void ShowAttackVisual(Vector3 position)
+    {
+        if (attackVisualCoroutine != null)
+            StopCoroutine(attackVisualCoroutine);
+
+        attackVisualCoroutine = StartCoroutine(
+            ShowAttackVisualCoroutine(position)
+        );
+    }
+
+    private IEnumerator ShowAttackVisualCoroutine(Vector3 position)
+    {
+        attackVisual.transform.position = position;
+        attackVisual.SetActive(true);
+
+        yield return new WaitForSeconds(attackVisualTime);
+
+        attackVisual.SetActive(false);
+        attackVisualCoroutine = null;
+    }
+
 
     private void OnDisable()
     {

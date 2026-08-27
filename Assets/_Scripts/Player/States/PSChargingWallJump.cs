@@ -15,7 +15,10 @@ public class PSChargingWallJump : PlayerStateBase
     private void ChangeState(bool chargingJump)
     {
         if(!chargingJump)
+        {    
+            playerBrain.playerMovement.facingDirection *= -1f;
             playerBrain.ChangeState(PlayerStates.Jumping);
+        }
     }
 
     void OnDisable()

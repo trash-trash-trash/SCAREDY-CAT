@@ -80,7 +80,6 @@ public class DogFightController : MonoBehaviour
         dogBrain.AnnounceDogState -= IfDogDies;
         playerBrain.AnnouncePlayerState -= IfPlayerDies;
 
-        // Finished fight
         EndFight();
     }
 
@@ -96,10 +95,6 @@ public class DogFightController : MonoBehaviour
 
     private void ResetFight()
     {
-        // TODO:
-        // Reset dog position/state
-        // Reset player
-        // Reset any fight-specific variables
         roofObj.SetActive(false);
         playerBrain.Reset();
         handOfGod.ResetCountdown();
@@ -114,9 +109,5 @@ public class DogFightController : MonoBehaviour
         roofObj.SetActive(false);
 
         handOfGod.ResetCountdown();
-        // TODO:
-        // Open exit
-        // Trigger rewards
-        // etc.
     }
 }
