@@ -17,12 +17,17 @@ public enum PlayerStates
     ClimbingUpLedge,
     Hiding,
     Unhiding,
-    TakeDamage
+    TakeDamage,
+    Death
 }
 
 public class PlayerBrain : MonoBehaviour
 {
+    public CheckPoint mostRecentCheckPoint;
+    
     public Health health;
+
+    public PlayerLives playerLives;
     
     public PlayerAttack playerAttack;
     public PlayerMovement playerMovement;
@@ -61,7 +66,8 @@ public class PlayerBrain : MonoBehaviour
     public GameObject hidingObj;
     public GameObject unhidingObj;
     public GameObject takeDamageObj;
-
+    public GameObject deathObj;
+    
     public Dictionary<PlayerStates, GameObject> statesDict =
         new Dictionary<PlayerStates, GameObject>();
 
@@ -93,14 +99,21 @@ public class PlayerBrain : MonoBehaviour
         statesDict.Add(PlayerStates.Hiding, hidingObj);
         statesDict.Add(PlayerStates.Unhiding, unhidingObj);
         statesDict.Add(PlayerStates.TakeDamage, takeDamageObj);
+        statesDict.Add(PlayerStates.Death, deathObj);
 
         health.AnnounceTakeDamage += TakeDamage;
+        health.AnnounceDeath += Dead;
         
         if(naomiTesting)
             ChangeState(PlayerStates.Idle);
         
         else
             ChangeState(PlayerStates.InMenu);
+    }
+
+    private void Dead()
+    {
+        ChangeState(PlayerStates.Death);
     }
 
     private void TakeDamage()
@@ -123,6 +136,13 @@ public class PlayerBrain : MonoBehaviour
             AnnouncePlayerState?.Invoke(currentState);
         }
     }
+
+    public void Reset()
+    {
+        transform.position = mostRecentCheckPoint.transform.position;
+        health.Res();
+        ChangeState(PlayerStates.Idle);
+    }
     
     public void StartLedgeClimb(Transform target)
     {
@@ -139,5 +159,11 @@ public class PlayerBrain : MonoBehaviour
     public void IAmHidingNow(bool input)
     {
         AnnounceHidden?.Invoke(input);
+    }
+
+    private void OnDestroy()
+    {
+        health.AnnounceTakeDamage -= TakeDamage;
+        health.AnnounceDeath -= Dead;
     }
 }

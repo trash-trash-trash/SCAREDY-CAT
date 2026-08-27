@@ -22,11 +22,17 @@ public class HandOfGod : MonoBehaviour
 
     public bool testing = false;
 
+    private Coroutine countdownCoroutine;
+
+    public bool isPaused = false;
+
     public void StartCountdown()
     {
+        if (countdownCoroutine != null)
+            StopCoroutine(countdownCoroutine);
+
         if (testing)
             timeTilNextAppearance = 30;
-        
         else
         {
             timeTilNextAppearance = UnityEngine.Random.Range(
@@ -34,36 +40,82 @@ public class HandOfGod : MonoBehaviour
                 maxTimeTilAppearance
             );
         }
-        
+
         countdownEndTime = Time.time + timeTilNextAppearance;
 
-        StartCoroutine(Countdown());
+        isPaused = false;
+
+        countdownCoroutine = StartCoroutine(Countdown());
     }
-    
+
     private void Update()
     {
-        currentTime = Mathf.Max(0f, countdownEndTime - Time.time);
+        if (!isPaused)
+        {
+            currentTime = Mathf.Max(0f, countdownEndTime - Time.time);
+        }
     }
-    
+
+    public void PauseCountdown()
+    {
+        if (isPaused)
+            return;
+
+        isPaused = true;
+
+        if (countdownCoroutine != null)
+        {
+            StopCoroutine(countdownCoroutine);
+            countdownCoroutine = null;
+        }
+    }
+
+    public void UnpauseCountdown()
+    {
+        if (!isPaused)
+            return;
+
+        isPaused = false;
+
+        countdownCoroutine = StartCoroutine(Countdown());
+    }
+
+    public void ResetCountdown()
+    {
+        if (countdownCoroutine != null)
+        {
+            StopCoroutine(countdownCoroutine);
+            countdownCoroutine = null;
+        }
+
+        isPaused = false;
+
+        StartCountdown();
+    }
 
     private IEnumerator Countdown()
     {
-        //countdown til 30 second warning
-        yield return new WaitForSeconds(
-            timeTilNextAppearance - godIsComingWarning
-        );
+        // Countdown until 30 second warning
+        float remainingTime = countdownEndTime - Time.time;
 
-        //30 second warning
+        if (remainingTime > godIsComingWarning)
+        {
+            yield return new WaitForSeconds(
+                remainingTime - godIsComingWarning
+            );
+        }
+
+        // 30 second warning
         AnnounceWarning?.Invoke();
 
-        
-        //more steps increasingly
+        // Countdown
         for (int i = (int)godIsComingWarning; i > 0; i--)
         {
             AnnounceCountdown?.Invoke(i);
 
             float progress = 1f - (i / godIsComingWarning);
             float delay = Mathf.Lerp(1.5f, 0.3f, progress * progress);
+
             yield return new WaitForSeconds(delay);
         }
 

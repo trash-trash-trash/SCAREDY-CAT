@@ -1,16 +1,21 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerLives : MonoBehaviour
 {
-    public float catLives = 9;
+    public TMP_Text lifeText;
+    
+    private float catLives = 9;
     public float currentLives = 9;
     
     public void LoseALife()
     {
         currentLives--;
-        if (currentLives <= 0)
-        {
-            //GameOver
-        }
+        lifeText.text = currentLives.ToString();
+    }
+
+    public void Reset()
+    {
+        currentLives = catLives;
     }
 }

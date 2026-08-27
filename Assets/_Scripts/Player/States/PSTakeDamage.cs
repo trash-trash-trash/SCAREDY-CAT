@@ -11,7 +11,7 @@ public class PSTakeDamage  : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
-        
+        playerBrain.health.FlipCanTakeDamage(false);
         //knock back
         playerBrain.rb.AddForce(new Vector3(knockBackHorForce, knockBackVertForce, 0));
         
@@ -25,5 +25,10 @@ public class PSTakeDamage  : PlayerStateBase
             playerBrain.ChangeState(PlayerStates.Idle);
         else
             playerBrain.ChangeState(PlayerStates.Falling);
+    }
+
+    void OnDisable()
+    {
+        playerBrain.health.FlipCanTakeDamage(true);
     }
 }

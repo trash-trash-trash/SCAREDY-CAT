@@ -52,4 +52,9 @@ public class Health : MonoBehaviour
     {
         ChangeHealth(-1);
     }
+
+    public void FlipCanTakeDamage(bool input)
+    {
+        canTakeDamage = input;
+    }
 }
