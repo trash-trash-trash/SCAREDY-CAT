@@ -51,21 +51,26 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Mist_Brightness: 0.24
-    - _Mist_Scale: 50
-    - _Mist_Speed: 0.1
-    - _Noise_Brightness: 0.04
-    - _Noise_Scale: 90
-    - _Noise_Speed: 0.001
-    - _Noise_Threshold: 0.5
+    - _Mist_Brightness: 0.17
+    - _Mist_Scale: 5.67
+    - _Mist_Speed: 0.74
+    - _Noise_Brightness: 0.12
+    - _Noise_Scale: 200
+    - _Noise_Speed: 0.01
+    - _Noise_Threshold: 0.3
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Second_Noise_Brightness: 0.02
+    - _Second_Noise_Scale: 190
+    - _Second_Noise_Speed: 0.008
+    - _Second_Noise_THreshold: 0.5
     m_Colors:
-    - _Mist_Colour: {r: 0.4433962, g: 0.35200053, b: 0.2488875, a: 1}
-    - _Mist_Direction: {r: 0.2, g: 0.05, b: 0, a: 0}
-    - _Noise_Colour: {r: 0.36245096, g: 0.36717698, b: 0.42452827, a: 1}
+    - _Mist_Colour: {r: 0.5283019, g: 0.40083662, b: 0.29654682, a: 1}
+    - _Mist_Direction: {r: 0.17, g: 0.05, b: 0, a: 0}
+    - _Noise_Colour: {r: 0.31238866, g: 0.33466086, b: 0.49056596, a: 1}
     - _Noise_Direction: {r: 1, g: 0.2, b: 0, a: 0}
-    - _Sky_Horizon: {r: 0.15908685, g: 0.16305327, b: 0.23584905, a: 1}
-    - _Sky_Top: {r: 0.040850826, g: 0.045147076, b: 0.056603767, a: 1}
+    - _Second_Noise_Colour: {r: 0.5764706, g: 0.25882354, b: 0.41749623, a: 1}
+    - _Sky_Horizon: {r: 0.10453009, g: 0.11342771, b: 0.2735849, a: 1}
+    - _Sky_Top: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
