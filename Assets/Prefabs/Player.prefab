@@ -1460,6 +1460,8 @@ MonoBehaviour:
   spriteObj: {fileID: 4312594868703484428}
   canHidePromptObj: {fileID: 588106250963636981}
   canHideText: {fileID: 5674701964328072228}
+  investigateTextObj: {fileID: 0}
+  investigateText: {fileID: 0}
   testCanvasObj: {fileID: 1551332750432147970}
   playerStateText: {fileID: 6944370425945329712}
   spriteRenderer: {fileID: 930207509863314016}

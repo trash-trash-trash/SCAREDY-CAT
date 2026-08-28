@@ -5,7 +5,7 @@ public class PlantFightTrigger : MonoBehaviour
 {
     public bool lookingForPlayer = true;
 
-    public event Action AnnouncePlayerDetected;
+    public event Action<Transform> AnnouncePlayerDetected;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -19,6 +19,6 @@ public class PlantFightTrigger : MonoBehaviour
 
         lookingForPlayer = false;
 
-        AnnouncePlayerDetected?.Invoke();
+        AnnouncePlayerDetected?.Invoke(other.transform);
     }
 }

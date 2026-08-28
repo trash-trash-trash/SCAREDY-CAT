@@ -82,6 +82,8 @@ public class PlayerBrain : MonoBehaviour
 
     public event Action AnnounceHardFlip;
 
+    public event Action<bool, string> AnnounceCanInvestigate;
+
     public bool naomiTesting = false;
 
     public bool testing = false;
@@ -155,6 +157,11 @@ public class PlayerBrain : MonoBehaviour
     {
         ledgeTarget = target;
         ChangeState(PlayerStates.ClimbingUpLedge);
+    }
+    
+    public void FlipCanInvestigate(bool input, string newText)
+    {
+        AnnounceCanInvestigate?.Invoke(input, newText);
     }
 
     public void FlipCanHide(bool input)

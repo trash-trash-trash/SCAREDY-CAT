@@ -14,6 +14,9 @@ public class PlayerView : MonoBehaviour
     public GameObject canHidePromptObj;
     public TMP_Text canHideText;
 
+    public GameObject investigateTextObj;
+    public TMP_Text investigateText;
+    
     public GameObject testCanvasObj;
     public TMP_Text playerStateText;
 
@@ -60,6 +63,20 @@ public class PlayerView : MonoBehaviour
         playerBrain.AnnounceCanHide += SetCanHidePrompt;
         playerBrain.AnnounceHidden += FlipHiding;
         playerBrain.health.AnnounceCurrentHealth += SetHealth;
+        playerBrain.AnnounceCanInvestigate += SetInvestigateText;
+    }
+
+    private void SetInvestigateText(bool input, string newText)
+    {
+        if (input)
+        {
+            investigateText.text = newText;
+            investigateTextObj.SetActive(true);
+        }
+        else
+        {
+            investigateTextObj.SetActive(false);
+        }
     }
 
     private void SetHealth(int obj)
