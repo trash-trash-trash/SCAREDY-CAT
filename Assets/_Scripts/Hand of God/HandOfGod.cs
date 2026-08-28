@@ -5,10 +5,10 @@ using Random = UnityEngine.Random;
 
 public class HandOfGod : MonoBehaviour
 {
+    public PlayerBrain playerBrain;
     public Transform playerTransform;
     public Transform handOfGodTransform;
-
-
+    
     public float yOffsetFollowing;
     public float zOffsetFollowing;
     
@@ -114,8 +114,6 @@ public class HandOfGod : MonoBehaviour
         }
     }
 
-
-
     public void PauseCountdown()
     {
         if (isPaused)
@@ -185,7 +183,6 @@ public class HandOfGod : MonoBehaviour
         
         StartCoroutine(MoveHandAway());
 
-        StartCountdown();
     }
     
     private IEnumerator MoveHandAway()
@@ -218,5 +215,8 @@ public class HandOfGod : MonoBehaviour
         }
 
         isDeparting = false;
+        //
+        // if(playerBrain.currentState!=PlayerStates.Death)
+        //     StartCountdown();
     }
 }
