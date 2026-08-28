@@ -7,6 +7,10 @@ public class HandOfGod : MonoBehaviour
     public Transform playerTransform;
     public Transform handOfGodTransform;
 
+    public Sprite handOfGod01;
+    public Sprite handOfGod02;
+    public Sprite handOfGod03;
+
     public float yOffsetFollowing;
     public float zOffsetFollowing;
     

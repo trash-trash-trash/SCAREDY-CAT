@@ -96,7 +96,6 @@ public class DogFightController : MonoBehaviour
     private void ResetFight()
     {
         roofObj.SetActive(false);
-        playerBrain.Reset();
         handOfGod.ResetCountdown();
 
         dogBrain.ChangeState(DogStates.Idle);

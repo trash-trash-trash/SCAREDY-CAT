@@ -23,6 +23,7 @@ public enum PlayerStates
 
 public class PlayerBrain : MonoBehaviour
 {
+    public CheckPoint originalCheckPoint;
     public CheckPoint mostRecentCheckPoint;
     
     public Health health;
@@ -139,7 +140,11 @@ public class PlayerBrain : MonoBehaviour
 
     public void Reset()
     {
-        transform.position = mostRecentCheckPoint.transform.position;
+        if (mostRecentCheckPoint != null)
+            transform.position = mostRecentCheckPoint.teleportPoint.position;
+        else
+            transform.position = originalCheckPoint.teleportPoint.position;
+        
         health.Res();
         ChangeState(PlayerStates.Idle);
     }

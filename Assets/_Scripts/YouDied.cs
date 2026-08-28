@@ -17,12 +17,12 @@ public class YouDied : MonoBehaviour
     public TMP_Text lifeTrackerText;
     
     [SerializeField] private Image backgroundImage;
-    [SerializeField] private float mainFadeDuration = 1f;
+    [SerializeField] private float mainFadeDuration = 2f;
 
     [Header("Other UI")]
     [SerializeField] private FadeGroup[] fadeGroups;
-    [SerializeField] private float groupFadeDuration = 0.5f;
-    [SerializeField] private float delayBetweenGroups = 0.2f;
+    [SerializeField] private float groupFadeDuration = 1f;
+    [SerializeField] private float delayBetweenGroups = 0.5f;
     
     public void BENDROWNED()
     {

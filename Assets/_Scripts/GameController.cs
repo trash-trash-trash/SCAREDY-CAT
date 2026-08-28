@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
    //mixing model / view but fuck it game jam we ball
-
-   public CheckPoint originalCheckPoint;
    
    public PlayerBrain playerBrain;
    public PlayerInputs playerInput;
@@ -43,12 +41,7 @@ public class GameController : MonoBehaviour
    {
       youDied.BENGOTCPR();
       
-      if(playerBrain.mostRecentCheckPoint != null)
-         playerBrain.transform.position = playerBrain.mostRecentCheckPoint.teleportPoint.transform.position;
-      else
-         playerBrain.transform.position = originalCheckPoint.teleportPoint.transform.position;
-      
-      playerBrain.ChangeState(PlayerStates.Idle);
+      playerBrain.Reset();
    }
 
    private void CheckPlayerHidden()
