@@ -19,7 +19,7 @@ public class PlantBrain : MonoBehaviour
     public GameObject idleObj;
     public GameObject aggroStandObj;
     public GameObject attackingObj;
-    public GameObject defendingObj;
+    public GameObject defeatedObj;
 
     public Dictionary<PlantStates, GameObject> statesDict =
         new Dictionary<PlantStates, GameObject>();
@@ -31,7 +31,7 @@ public class PlantBrain : MonoBehaviour
         statesDict.Add(PlantStates.Idle, idleObj);
         statesDict.Add(PlantStates.AggroStand, aggroStandObj);
         statesDict.Add(PlantStates.Attacking, attackingObj);
-        statesDict.Add(PlantStates.Defeated, defendingObj);
+        statesDict.Add(PlantStates.Defeated, defeatedObj);
 
         ChangeState(PlantStates.Idle);
     }

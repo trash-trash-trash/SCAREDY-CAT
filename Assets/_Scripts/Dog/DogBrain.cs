@@ -42,8 +42,9 @@ public class DogBrain : MonoBehaviour
 
     public Color originalColor;
 
-    public float damageFlashDuration = 0.7f;
+    public float damageFlashDuration = 1.2f;
     public float damageFlashInterval = 0.05f;
+    public float invincibleDuration = 1.5f;
 
     public bool defeated = false;
     
@@ -99,6 +100,9 @@ public class DogBrain : MonoBehaviour
         }
 
         spriteRenderer.color = originalColor;
+        
+        yield return new WaitForSeconds(invincibleDuration);
+        
         health.FlipCanTakeDamage(true);
     }
 
