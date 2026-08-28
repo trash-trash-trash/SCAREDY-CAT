@@ -80,6 +80,8 @@ public class PlayerBrain : MonoBehaviour
 
     public event Action<bool> AnnounceHidden;
 
+    public event Action AnnounceHardFlip;
+
     public bool naomiTesting = false;
 
     public bool testing = false;
@@ -164,6 +166,11 @@ public class PlayerBrain : MonoBehaviour
     public void IAmHidingNow(bool input)
     {
         AnnounceHidden?.Invoke(input);
+    }
+
+    public void HardFlip()
+    {
+        AnnounceHardFlip?.Invoke();
     }
 
     private void OnDestroy()

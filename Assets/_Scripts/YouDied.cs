@@ -15,6 +15,9 @@ public class YouDied : MonoBehaviour
     public GameObject youDiedObj;
     public PlayerBrain playerBrain;
     public TMP_Text lifeTrackerText;
+
+    public GameObject gameOverButton;
+    public GameObject resetButton;
     
     [SerializeField] private Image backgroundImage;
     [SerializeField] private float mainFadeDuration = 2f;
@@ -95,6 +98,12 @@ public class YouDied : MonoBehaviour
         
         playerBrain.playerLives.LoseALife();
         lifeTrackerText.text = playerBrain.playerLives.currentLives.ToString();
+
+        if (playerBrain.playerLives.currentLives <= 0)
+        {
+            gameOverButton.SetActive(true);
+            resetButton.SetActive(false);
+        }
     }
 
     private IEnumerator FadeImage(

@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 public class GameController : MonoBehaviour
 {
    //mixing model / view but fuck it game jam we ball
-   
+
+   public DogFightController dogFight;
    public PlayerBrain playerBrain;
    public PlayerInputs playerInput;
    public HandOfGod handOfGod;
@@ -32,15 +33,29 @@ public class GameController : MonoBehaviour
       playerBrain.health.AnnounceDeath += BENDROWNED;
    }
 
+   public void GameOver()
+   {
+      startedGame = false;
+      youDied.youDiedObj.SetActive(false);
+      playerBrain.transform.position = playerBrain.originalCheckPoint.teleportPoint.position;
+      playerBrain.health.Res();
+      playerBrain.playerLives.currentLives = 9;
+      playerBrain.ChangeState(PlayerStates.InMenu);
+      handOfGod.PauseCountdown();
+      dogFight.ResetFight();
+      mainMenu.ChangeState(MainMenuStates.PressStart);
+   }
+
    private void BENDROWNED()
    {
+      handOfGod.PauseCountdown();
       youDied.BENDROWNED();
    }
 
    public void Reset()
    {
+      handOfGod.StartCountdown();
       youDied.BENGOTCPR();
-      
       playerBrain.Reset();
    }
 
@@ -106,6 +121,7 @@ public class GameController : MonoBehaviour
          if (newState == MainMenuStates.InGame)
          {
             handOfGod.StartCountdown();
+            playerBrain.ChangeState(PlayerStates.Idle);
             startedGame = true;
          }
       }

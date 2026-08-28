@@ -50,6 +50,7 @@ public class PlayerView : MonoBehaviour
             testCanvasObj.SetActive(true);
         }
 
+        playerBrain.AnnounceHardFlip += HardFlip;
         playerBrain.AnnouncePlayerState += SetPlayerState;
         playerBrain.AnnounceCanHide += SetCanHidePrompt;
         playerBrain.AnnounceHidden += FlipHiding;
@@ -118,6 +119,15 @@ public class PlayerView : MonoBehaviour
     //     }
     // }
 
+    //hard flip (for wall jumps)
+    public void HardFlip()
+    {
+        if (spriteObj.transform.eulerAngles.y > 0f)
+            spriteObj.transform.eulerAngles = new Vector3(0, 0, 0);
+        else
+            spriteObj.transform.eulerAngles = new Vector3(0, 180, 0);
+    }
+
     //only flip during said states
     void Update()
     {
@@ -135,6 +145,7 @@ public class PlayerView : MonoBehaviour
 
     void OnDisable()
     {
+        playerBrain.AnnounceHardFlip -= HardFlip;
         playerBrain.AnnounceHidden -= FlipHiding;
         playerBrain.AnnouncePlayerState -= SetPlayerState;
         playerBrain.AnnounceCanHide -= SetCanHidePrompt;

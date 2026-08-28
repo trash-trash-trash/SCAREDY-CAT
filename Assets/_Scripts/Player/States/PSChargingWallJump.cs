@@ -16,7 +16,9 @@ public class PSChargingWallJump : PlayerStateBase
     {
         if(!chargingJump)
         {    
-            playerBrain.playerMovement.facingDirection *= -1f;
+            if (playerBrain.playerMovement.moveInput.x != 0)
+               playerBrain.HardFlip();
+    
             playerBrain.ChangeState(PlayerStates.Jumping);
         }
     }

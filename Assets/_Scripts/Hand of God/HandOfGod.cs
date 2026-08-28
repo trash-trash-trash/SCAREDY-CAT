@@ -1,15 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HandOfGod : MonoBehaviour
 {
     public Transform playerTransform;
     public Transform handOfGodTransform;
 
-    public Sprite handOfGod01;
-    public Sprite handOfGod02;
-    public Sprite handOfGod03;
 
     public float yOffsetFollowing;
     public float zOffsetFollowing;
@@ -40,6 +38,11 @@ public class HandOfGod : MonoBehaviour
     public float godDepartureDuration = 2f;
 
     private bool isDeparting;
+
+    public Sprite handOfGod01;
+    public Sprite handOfGod02;
+    public Sprite handOfGod03;
+    public SpriteRenderer spriteRenderer;
     
     private Coroutine departureCoroutine;
 
@@ -50,13 +53,28 @@ public class HandOfGod : MonoBehaviour
 
         if (testing)
             timeTilNextAppearance = 30;
+        
         else
         {
-            timeTilNextAppearance = UnityEngine.Random.Range(
+            timeTilNextAppearance = Random.Range(
                 minTimeTilAppearance,
                 maxTimeTilAppearance
             );
         }
+        
+        //randomly pick sprite for variety
+        spriteRenderer.sprite = Random.Range(0, 3) switch
+        {
+            0 => handOfGod01,
+            1 => handOfGod02,
+            _ => handOfGod03
+        };
+        
+        //randomly flip left/right for variety
+        if (Random.value < 0.5f)
+            spriteRenderer.transform.eulerAngles = new Vector3(0, 180, 0);
+        else
+            spriteRenderer.transform.eulerAngles = new Vector3(0, 0, 0);
 
         countdownEndTime = Time.time + timeTilNextAppearance;
 
