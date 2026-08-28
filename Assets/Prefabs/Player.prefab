@@ -354,6 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a871f9b3ca1780d48b6811c7678556be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBrain
+  originalCheckPoint: {fileID: 0}
   mostRecentCheckPoint: {fileID: 0}
   health: {fileID: 3285464024608032691}
   playerLives: {fileID: 6150468204815323193}
@@ -778,7 +779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &969037699572846016
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1455,6 +1456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerView
   playerBrain: {fileID: 1371361712377967622}
+  lifeSlider: {fileID: 0}
   spriteObj: {fileID: 4312594868703484428}
   canHidePromptObj: {fileID: 588106250963636981}
   canHideText: {fileID: 5674701964328072228}
@@ -1952,7 +1954,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: E - HIDE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ad5d628aa0e8dca4ea2b84f697fa47d4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2019,7 +2021,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8935434806347679766

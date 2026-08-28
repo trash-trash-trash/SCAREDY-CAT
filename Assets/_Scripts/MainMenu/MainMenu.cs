@@ -8,7 +8,8 @@ public enum MainMenuStates
     PressStart,
     MainMenu,
     Options,
-    Quit
+    Quit,
+    EndGame
 }
 
 public class MainMenu : MonoBehaviour
@@ -20,7 +21,8 @@ public class MainMenu : MonoBehaviour
     public GameObject pressStartObj;
     public GameObject mainMenuObj;
     public GameObject optionsObj;
-    public GameObject QuitObj;
+    public GameObject quitObj;
+    public GameObject endGameObj;
 
     public Dictionary<MainMenuStates, GameObject> statesDict = new Dictionary<MainMenuStates, GameObject>();
 
@@ -34,7 +36,8 @@ public class MainMenu : MonoBehaviour
         statesDict.Add(MainMenuStates.PressStart, pressStartObj);
         statesDict.Add(MainMenuStates.MainMenu, mainMenuObj);
         statesDict.Add(MainMenuStates.Options, optionsObj);
-        statesDict.Add(MainMenuStates.Quit, QuitObj);
+        statesDict.Add(MainMenuStates.Quit, quitObj);
+        statesDict.Add(MainMenuStates.EndGame, endGameObj);
 
         if(testingGameplay)
             ChangeState(MainMenuStates.InGame);
@@ -85,6 +88,11 @@ public class MainMenu : MonoBehaviour
 #else
             Application.Quit();
 #endif
+    }
+
+    public void TestEndScreen()
+    {
+        ChangeState(MainMenuStates.EndGame);
     }
 
     void OnDisable()

@@ -14,6 +14,8 @@ public class Health : MonoBehaviour
     
     public event Action AnnounceDeath;
 
+    public event Action<int> AnnounceCurrentHealth;
+
     void Awake()
     {
         Res();
@@ -46,6 +48,8 @@ public class Health : MonoBehaviour
         
         else
             isAlive = true;
+        
+        AnnounceCurrentHealth?.Invoke(currentHealth);
     }
 
     public void Hit()

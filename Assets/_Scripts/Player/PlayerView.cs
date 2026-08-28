@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerView : MonoBehaviour
 {
     public PlayerBrain playerBrain;
+
+    public Slider lifeSlider;
 
     public GameObject spriteObj;
 
@@ -50,10 +53,18 @@ public class PlayerView : MonoBehaviour
             testCanvasObj.SetActive(true);
         }
 
+        lifeSlider.maxValue = playerBrain.health.maxHealth;
+
         playerBrain.AnnounceHardFlip += HardFlip;
         playerBrain.AnnouncePlayerState += SetPlayerState;
         playerBrain.AnnounceCanHide += SetCanHidePrompt;
         playerBrain.AnnounceHidden += FlipHiding;
+        playerBrain.health.AnnounceCurrentHealth += SetHealth;
+    }
+
+    private void SetHealth(int obj)
+    {
+        lifeSlider.value = obj;
     }
 
     private void FlipHiding(bool IAmHidingNow)
@@ -149,5 +160,6 @@ public class PlayerView : MonoBehaviour
         playerBrain.AnnounceHidden -= FlipHiding;
         playerBrain.AnnouncePlayerState -= SetPlayerState;
         playerBrain.AnnounceCanHide -= SetCanHidePrompt;
+        playerBrain.health.AnnounceCurrentHealth -= SetHealth;
     }
 }

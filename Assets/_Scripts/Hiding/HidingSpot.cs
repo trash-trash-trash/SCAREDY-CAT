@@ -6,6 +6,7 @@ public class HidingSpot : MonoBehaviour
     public ScalePulse scalePulse;
     
     public bool playerDetected = false;
+    
     private void OnTriggerStay(Collider other)
     {
         PlayerBrain playerBrain = other.GetComponent<PlayerBrain>();
