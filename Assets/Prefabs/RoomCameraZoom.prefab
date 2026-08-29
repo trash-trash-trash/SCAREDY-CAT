@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 1329821731400497213}
   - component: {fileID: 4403414013874158362}
   - component: {fileID: 3348835084675276646}
+  - component: {fileID: 3157823304106796441}
   m_Layer: 0
   m_Name: RoomCameraZoom
   m_TagString: Untagged
@@ -309,3 +310,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraRoomTrigger
   cameraPosition: {fileID: 8612302952606658078}
+--- !u!114 &3157823304106796441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6912745323133413106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 594c1909c26e8a6469696187760e65dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FixedCameraZone
