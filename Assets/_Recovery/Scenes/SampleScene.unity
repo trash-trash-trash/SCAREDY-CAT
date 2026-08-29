@@ -8507,6 +8507,11 @@ Transform:
   - {fileID: 888977737}
   m_Father: {fileID: 1873987347}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1249702656 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8937938954058728836, guid: 0901615e382bf244a956fed908087868, type: 3}
+  m_PrefabInstance: {fileID: 3462703196995443623}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1255886462
 GameObject:
   m_ObjectHideFlags: 0
@@ -14600,6 +14605,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2005382734532795839, guid: 0901615e382bf244a956fed908087868, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 1249702656}
     - target: {fileID: 2789820651206329594, guid: 0901615e382bf244a956fed908087868, type: 3}
       propertyPath: m_Name
       value: PlantBoss
@@ -14643,6 +14652,14 @@ PrefabInstance:
     - target: {fileID: 4147932100131407410, guid: 0901615e382bf244a956fed908087868, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7530883738884639975, guid: 0901615e382bf244a956fed908087868, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 7530883738884639975, guid: 0901615e382bf244a956fed908087868, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -47.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -16,10 +16,12 @@ public class PlantView : MonoBehaviour
 
    private void SetSprite(PlantStates newState)
    {
-      if(newState == PlantStates.Defeated)
-         spriteRenderer.sprite = defeatedSprite;
-      else
-         spriteRenderer.sprite = defaultSprite;
+        if (newState == PlantStates.Defeated)
+     
+            spriteRenderer.sprite = defeatedSprite;
+
+        else
+            spriteRenderer.sprite = defaultSprite;
    }
 
    void OnDisable()

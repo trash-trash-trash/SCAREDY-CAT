@@ -34,6 +34,8 @@ public class PlayerView : MonoBehaviour
     public AnimationClip climbingClip;
     public AnimationClip takeDamageClip;
 
+    public AnimationClip hideClip;
+
     public Dictionary<PlayerStates, AnimationClip> animationClipsDict = new Dictionary<PlayerStates, AnimationClip>();
 
     void Awake()
@@ -48,7 +50,7 @@ public class PlayerView : MonoBehaviour
         animationClipsDict.Add(PlayerStates.Falling, fallingClip);
         animationClipsDict.Add(PlayerStates.StickingToWall, climbingClip);
         animationClipsDict.Add(PlayerStates.TakeDamage, takeDamageClip);
-        animationClipsDict.Add(PlayerStates.Hiding, jumpingClip);
+        animationClipsDict.Add(PlayerStates.Hiding, hideClip);
         animationClipsDict.Add(PlayerStates.Unhiding, jumpingClip);
 
         if (playerBrain.testing)
@@ -61,7 +63,7 @@ public class PlayerView : MonoBehaviour
         playerBrain.AnnounceHardFlip += HardFlip;
         playerBrain.AnnouncePlayerState += SetPlayerState;
         playerBrain.AnnounceCanHide += SetCanHidePrompt;
-        playerBrain.AnnounceHidden += FlipHiding;
+        //playerBrain.AnnounceHidden += FlipHiding;
         playerBrain.health.AnnounceCurrentHealth += SetHealth;
         playerBrain.AnnounceCanInvestigate += SetInvestigateText;
     }

@@ -93,6 +93,7 @@ public class PlantBrain : MonoBehaviour
     private void Die()
     {
         ChangeState(PlantStates.Defeated);
+        transform.position += new Vector3(0, -3f, 0);
     }
 
     private void SetTarget(Transform obj)
