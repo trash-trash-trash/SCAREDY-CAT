@@ -159,11 +159,11 @@ public class PlayerBrain : MonoBehaviour
     {
         if (mostRecentCheckPoint != null)
         {
-            transform.position = mostRecentCheckPoint.teleportPoint.position;
+            rb.position = mostRecentCheckPoint.teleportPoint.position;
         }
         else
         {
-            transform.position = originalCheckPoint.teleportPoint.position;
+            rb.position = originalCheckPoint.teleportPoint.position;
         }
 
         // Wait until the transform position has actually been applied

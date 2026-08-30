@@ -51,7 +51,6 @@ public class GameController : MonoBehaviour
       Debug.Log("SUP");
       startedGame = false;
       youDied.youDiedObj.SetActive(false);
-      playerBrain.health.Res();
       playerBrain.playerLives.currentLives = 9;
       playerBrain.ChangeState(PlayerStates.InMenu);
       handOfGod.PauseCountdown();
@@ -68,6 +67,7 @@ public class GameController : MonoBehaviour
       yield return null;
       mainMenu.ChangeState(MainMenuStates.PressStart);
 
+      playerBrain.health.Res();
       endedGame = false;
    }
 
@@ -169,6 +169,7 @@ public class GameController : MonoBehaviour
 
    IEnumerator EndGameCoro()
    {
+      playerBrain.ChangeState(PlayerStates.InMenu);
       endedGame = true;
       yield return new WaitForSeconds(endGameWait);
       handOfGod.GrabPlayerCoro();
