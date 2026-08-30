@@ -28,6 +28,9 @@ public class Health : MonoBehaviour
 
     public void ChangeHealth(int amount)
     {
+        if (!canTakeDamage)
+            return;
+        
         if (amount < 0)
             AnnounceTakeDamage?.Invoke();
         

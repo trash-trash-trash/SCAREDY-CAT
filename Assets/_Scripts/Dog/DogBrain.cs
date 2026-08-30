@@ -81,8 +81,6 @@ public class DogBrain : MonoBehaviour
 
     private IEnumerator DamageFlash()
     {
-        Color originalColor = spriteRenderer.color;
-
         float elapsed = 0f;
         bool isRed = false;
 
@@ -102,16 +100,22 @@ public class DogBrain : MonoBehaviour
         }
 
         spriteRenderer.color = originalColor;
-        
+
         yield return new WaitForSeconds(invincibleDuration);
-        
+
         health.FlipCanTakeDamage(true);
     }
 
     public void ChangeState(DogStates newState)
     {
+        if (defeated)
+            return;
+        
         if (statesDict.TryGetValue(newState, out GameObject stateObj))
         {
+            if (currentState == DogStates.Defeated)
+                return;
+            
             if (prevObj != null)
                 prevObj.SetActive(false);
 

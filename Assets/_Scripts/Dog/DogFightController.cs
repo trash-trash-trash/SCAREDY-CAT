@@ -8,8 +8,10 @@ public class DogFightController : MonoBehaviour
     public DogFightTrigger dogFightTrigger;
     public HandOfGod handOfGod;
 
+    public GameController gameController;
+    
     public GameObject roofObj;
-
+    
     private void Awake()
     {
         WaitForTrigger();
@@ -96,16 +98,15 @@ public class DogFightController : MonoBehaviour
     public void ResetFight()
     {
         roofObj.SetActive(false);
-
-        dogBrain.ChangeState(DogStates.Idle);
+        dogBrain.defeated = false;
         dogBrain.health.Res();
+        dogBrain.ChangeState(DogStates.Idle);
         WaitForTrigger();
     }
-
+    
     private void EndFight()
     {
         roofObj.SetActive(false);
-
-        handOfGod.ResetCountdown();
+        gameController.EndGame();
     }
 }

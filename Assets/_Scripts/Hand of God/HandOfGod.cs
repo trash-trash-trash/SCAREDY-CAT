@@ -8,6 +8,7 @@ public class HandOfGod : MonoBehaviour
     public PlayerBrain playerBrain;
     public Transform playerTransform;
     public Transform handOfGodTransform;
+    public MainMenu mainMenu;
 
     public float yOffsetFollowing;
     public float zOffsetFollowing;
@@ -44,6 +45,8 @@ public class HandOfGod : MonoBehaviour
     public SpriteRenderer spriteRenderer;
 
     private Coroutine departureCoroutine;
+
+    private Coroutine grabPlayerCoro;
 
     public void StartCountdown()
     {
@@ -216,5 +219,71 @@ public class HandOfGod : MonoBehaviour
 
         if (playerBrain.currentState != PlayerStates.Death)
             StartCountdown();
+    }
+
+    public void GrabPlayerCoro()
+    {
+        if (grabPlayerCoro != null)
+            return;
+
+        grabPlayerCoro =
+            StartCoroutine(MoveTowardAndAway());
+    }
+
+    private IEnumerator MoveTowardAndAway()
+    {
+        float elapsed = 0f;
+
+        Vector3 startPos = handOfGodTransform.position;
+        Vector3 closePos = new Vector3(
+            playerTransform.position.x,
+            playerTransform.position.y + yOffsetClose,
+            playerTransform.position.z + zOffsetFollowing
+        );
+
+        // Move toward player
+        while (elapsed < godDepartureDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsed / godDepartureDuration);
+
+            handOfGodTransform.position = Vector3.Lerp(
+                startPos,
+                closePos,
+                t
+            );
+
+            yield return null;
+        }
+
+        playerBrain.ChangeState(PlayerStates.InMenu);
+
+        // Move away
+        elapsed = 0f;
+
+        Vector3 awayPos = new Vector3(
+            playerTransform.position.x,
+            playerTransform.position.y + yOffsetFollowing,
+            playerTransform.position.z + zOffsetFollowing
+        );
+
+        while (elapsed < godDepartureDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsed / godDepartureDuration);
+
+            handOfGodTransform.position = Vector3.Lerp(
+                closePos,
+                awayPos,
+                t
+            );
+
+            yield return null;
+
+            if(mainMenu.currentState!=MainMenuStates.EndGame)
+                mainMenu.ChangeState(MainMenuStates.EndGame);
+        }
     }
 }

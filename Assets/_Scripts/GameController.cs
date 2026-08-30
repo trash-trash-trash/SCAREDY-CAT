@@ -27,6 +27,10 @@ public class GameController : MonoBehaviour
    public bool paused = false;
    public GameObject pausedObj;
 
+   public float endGameWait = 5f;
+
+   public bool endedGame = false;
+
    void Start()
    {
       handOfGod.AnnounceWarning += FadeTextInOut;
@@ -38,15 +42,33 @@ public class GameController : MonoBehaviour
 
    public void GameOver()
    {
+      Debug.Log("GAME OVER BUTTON");
+      StartCoroutine(GameOverCoro());
+   }
+
+   IEnumerator GameOverCoro()
+   {
+      Debug.Log("SUP");
       startedGame = false;
       youDied.youDiedObj.SetActive(false);
-      playerBrain.transform.position = playerBrain.originalCheckPoint.teleportPoint.position;
       playerBrain.health.Res();
       playerBrain.playerLives.currentLives = 9;
       playerBrain.ChangeState(PlayerStates.InMenu);
       handOfGod.PauseCountdown();
       dogFight.ResetFight();
+      
+      yield return null;
+      
+      playerBrain.rb.linearVelocity = Vector3.zero;
+      playerBrain.rb.angularVelocity = Vector3.zero;
+
+      playerBrain.rb.position =
+         playerBrain.originalCheckPoint.teleportPoint.position;
+      
+      yield return null;
       mainMenu.ChangeState(MainMenuStates.PressStart);
+
+      endedGame = false;
    }
 
    private void BENDROWNED()
@@ -137,6 +159,19 @@ public class GameController : MonoBehaviour
             startedGame = true;
          }
       }
+   }
+
+   public void EndGame()
+   {
+      if(!endedGame)
+         StartCoroutine(EndGameCoro());
+   }
+
+   IEnumerator EndGameCoro()
+   {
+      endedGame = true;
+      yield return new WaitForSeconds(endGameWait);
+      handOfGod.GrabPlayerCoro();
    }
 
    void OnDisable()

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -14,78 +13,97 @@ public class MMEndGame : MainMenuStateBase
     [SerializeField] private float fadeDuration = 1f;
     [SerializeField] private float delayBetween = 0.25f;
 
+    public GameObject returnToMenuButton;
+    
+    private Coroutine fadeCoroutine;
+
     public override void OnEnable()
     {
         base.OnEnable();
+        
+        Debug.Log("END GAME STATE");
+
+        mainMenu.finishedGame = true;
+
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        // Start completely invisible
+        Color imageColor = finalImage.color;
+        imageColor.a = 0f;
+        finalImage.color = imageColor;
+
+        Color finalTextColor = finalText.color;
+        finalTextColor.a = 0f;
+        finalText.color = finalTextColor;
+
+        Color endTextColor = theEndText.color;
+        endTextColor.a = 0f;
+        theEndText.color = endTextColor;
+
         finalImageObj.SetActive(true);
-        StartCoroutine(FadeIn());
+
+        fadeCoroutine = StartCoroutine(FadeIn());
     }
 
     IEnumerator FadeIn()
     {
-        SetAlpha(finalImage, 0f);
-        SetAlpha(finalText, 0f);
-        SetAlpha(theEndText, 0f);
-
-        // Fade in image
-        yield return FadeImage(finalImage);
-
-        yield return new WaitForSeconds(delayBetween);
-
-        // Fade in final text
-        yield return FadeText(finalText);
-
-        yield return new WaitForSeconds(delayBetween);
-
-        // Fade in "The End"
-        yield return FadeText(theEndText);
-    }
-
-    IEnumerator FadeImage(Image image)
-    {
+        // IMAGE
         float time = 0f;
 
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
-            float alpha = Mathf.Clamp01(time / fadeDuration);
 
-            SetAlpha(image, alpha);
+            Color color = finalImage.color;
+            color.a = Mathf.Clamp01(time / fadeDuration);
+            finalImage.color = color;
 
             yield return null;
         }
 
-        SetAlpha(image, 1f);
-    }
+        yield return new WaitForSeconds(delayBetween);
 
-    IEnumerator FadeText(TMP_Text text)
-    {
-        float time = 0f;
+        // FINAL TEXT
+        time = 0f;
 
         while (time < fadeDuration)
         {
             time += Time.deltaTime;
-            float alpha = Mathf.Clamp01(time / fadeDuration);
 
-            SetAlpha(text, alpha);
+            Color color = finalText.color;
+            color.a = Mathf.Clamp01(time / fadeDuration);
+            finalText.color = color;
 
             yield return null;
         }
 
-        SetAlpha(text, 1f);
+        yield return new WaitForSeconds(delayBetween);
+
+        // THE END
+        time = 0f;
+
+        while (time < fadeDuration)
+        {
+            time += Time.deltaTime;
+
+            Color color = theEndText.color;
+            color.a = Mathf.Clamp01(time / fadeDuration);
+            theEndText.color = color;
+
+            yield return null;
+        }
+
+        returnToMenuButton.SetActive(true);
     }
 
-    void SetAlpha(Image image, float alpha)
+    private void OnDisable()
     {
-        Color color = image.color;
-        color.a = alpha;
-        image.color = color;
-    }
+        returnToMenuButton.SetActive(false);
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
 
-    void SetAlpha(TMP_Text text, float alpha)
-    {
-        Color color = text.color;
-        color.a = alpha;
-        text.color = color;
+        if(finalImageObj != null)
+            finalImageObj.SetActive(false);
     }
 }

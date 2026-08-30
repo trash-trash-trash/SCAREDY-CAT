@@ -28,6 +28,8 @@ public class MainMenu : MonoBehaviour
 
     public event Action<MainMenuStates> AnnounceMainMenuState;
 
+    public bool finishedGame = false;
+
     public bool testingGameplay = false;
 
     void OnEnable()
@@ -50,6 +52,9 @@ public class MainMenu : MonoBehaviour
     {
         if (statesDict.TryGetValue(newState, out GameObject stateObj))
         {
+            if (newState == currentState)
+                return;
+            
             if (prevObj != null)
                 prevObj.SetActive(false);
 
@@ -58,6 +63,8 @@ public class MainMenu : MonoBehaviour
             currentState = newState;
 
             AnnounceMainMenuState?.Invoke(currentState);
+            
+            Debug.Log(newState);
         }
     }
 
