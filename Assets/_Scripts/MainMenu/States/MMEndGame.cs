@@ -23,8 +23,6 @@ public class MMEndGame : MainMenuStateBase
         
         Debug.Log("END GAME STATE");
 
-        mainMenu.finishedGame = true;
-
         if (fadeCoroutine != null)
             StopCoroutine(fadeCoroutine);
 

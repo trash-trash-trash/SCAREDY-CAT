@@ -28,8 +28,6 @@ public class MainMenu : MonoBehaviour
 
     public event Action<MainMenuStates> AnnounceMainMenuState;
 
-    public bool finishedGame = false;
-
     public bool testingGameplay = false;
 
     void OnEnable()
@@ -64,7 +62,7 @@ public class MainMenu : MonoBehaviour
 
             AnnounceMainMenuState?.Invoke(currentState);
             
-            Debug.Log(newState);
+        //    Debug.Log(newState);
         }
     }
 
