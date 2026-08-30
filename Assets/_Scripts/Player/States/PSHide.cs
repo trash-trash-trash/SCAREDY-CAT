@@ -12,6 +12,7 @@ public class PSHiding : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
+        playerBrain.health.FlipCanTakeDamage(false);
         playerBrain.canHide = false;
         playerBrain.playerAttack.FlipCanAttack(false);
         playerBrain.rb.useGravity = false;

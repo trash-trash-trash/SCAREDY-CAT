@@ -55,6 +55,7 @@ public class PSUnhide : PlayerStateBase
 
     private void OnDisable()
     {
+        playerBrain.health.FlipCanTakeDamage(true);
         playerBrain.rb.useGravity = true;
         playerBrain.hiding = false;
     }
