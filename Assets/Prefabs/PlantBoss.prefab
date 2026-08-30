@@ -401,7 +401,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   plantBullet: {fileID: 5134747548067572064, guid: e946e7dd81ba1004cb798a8bd87cc9ab, type: 3}
   health: {fileID: 4943626553568510777}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 8937938954058728836}
   idleObj: {fileID: 5525691313575814262}
   aggroStandObj: {fileID: 7686342037405044780}
   attackingObj: {fileID: 1167631942555660461}

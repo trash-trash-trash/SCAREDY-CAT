@@ -166,13 +166,13 @@ public class PlayerAttack : MonoBehaviour
                 continue;
 
             health.ChangeHealth(attackDamage);
-            Debug.Log("Changed " + hit.name + " health by " + attackDamage);
+            // Debug.Log("Changed " + hit.name + " health by " + attackDamage);
         }
         ShowAttackVisual(attackCenter);
-
-        Debug.Log(
-            $"Attack! Direction: {direction}, Power: {power}, Radius: {attackRadius}, Hits: {hitCount}"
-        );
+        //
+        // Debug.Log(
+        //     $"Attack! Direction: {direction}, Power: {power}, Radius: {attackRadius}, Hits: {hitCount}"
+        // );
     }
 
     private void ShowAttackVisual(Vector3 position)

@@ -48,6 +48,8 @@ public class DogBrain : MonoBehaviour
 
     public bool defeated = false;
     
+    public InvestigateSpot investigateSpot;
+    
     public event Action<DogStates> AnnounceDogState;
 
     public event Action AnnounceFightStarted;

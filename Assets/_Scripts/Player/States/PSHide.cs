@@ -50,11 +50,13 @@ public class PSHiding : PlayerStateBase
             playerBrain.IAmHidingNow(true);
             
             playerBrain.canHide = true;
+            playerBrain.rb.isKinematic = true;
         }
     }
 
     private void OnDisable()
     {
+        playerBrain.rb.isKinematic = false;
         playerBrain.rb.useGravity = true;
         playerBrain.hiding = false;
     }

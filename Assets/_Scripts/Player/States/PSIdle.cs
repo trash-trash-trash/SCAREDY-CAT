@@ -12,6 +12,8 @@ public class PSIdle : PlayerStateBase
         playerBrain.playerMovement.readingLeftRight = true;
         playerBrain.playerJump.AnnounceChargingJump += ChangeJumpState;
         playerBrain.playerAttack.AnnounceChargingAttack += ChangeAttackState;
+        playerBrain.rb.isKinematic = false;
+        playerBrain.health.FlipCanTakeDamage(true);
     }
 
     private void ChangeAttackState(bool chargingAttack)

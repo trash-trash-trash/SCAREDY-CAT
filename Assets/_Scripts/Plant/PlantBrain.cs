@@ -42,8 +42,11 @@ public class PlantBrain : MonoBehaviour
 
     public event Action<PlantStates> AnnouncePlantState;
 
+    private Color originalColor;
+
     void Awake()
     {
+        originalColor = spriteRenderer.color;
         statesDict.Add(PlantStates.Idle, idleObj);
         statesDict.Add(PlantStates.AggroStand, aggroStandObj);
         statesDict.Add(PlantStates.Attacking, attackingObj);
@@ -58,13 +61,13 @@ public class PlantBrain : MonoBehaviour
 
     private void TakeDamage()
     {
+        if (!health.canTakeDamage)
+            return;
         StartCoroutine(DamageFlash());
     }
     
     private IEnumerator DamageFlash()
     {
-        Color originalColor = spriteRenderer.color;
-
         float elapsed = 0f;
         bool isRed = false;
 
@@ -92,8 +95,13 @@ public class PlantBrain : MonoBehaviour
 
     private void Die()
     {
+        if (currentState == PlantStates.Defeated)
+            return;
+        
+        spriteRenderer.color = originalColor;
         ChangeState(PlantStates.Defeated);
         transform.position += new Vector3(0, -3f, 0);
+        health.FlipCanTakeDamage(false);
     }
 
     private void SetTarget(Transform obj)

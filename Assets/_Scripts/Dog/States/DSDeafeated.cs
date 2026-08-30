@@ -10,5 +10,6 @@ public class DSDefeated : DogStateBase
         dogBrain.spriteRenderer.sprite = happydogSprite;
         dogBrain.scalePulse.StartPulse();
         dogBrain.defeated = true;
+        dogBrain.investigateSpot.revealed = true;
     }
 }

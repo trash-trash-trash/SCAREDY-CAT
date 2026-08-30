@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,8 @@ public class GameController : MonoBehaviour
 {
    //mixing model / view but fuck it game jam we ball
 
+   public List<PlantBrain> plantHealthList = new List<PlantBrain>();
+   
    public DogFightController dogFight;
    public PlayerBrain playerBrain;
    public PlayerInputs playerInput;

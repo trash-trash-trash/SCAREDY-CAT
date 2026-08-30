@@ -18,8 +18,8 @@ public class HandOfGod : MonoBehaviour
     
     public float timeTilNextAppearance;
     
-    private float minTimeTilAppearance = 120;
-    private float maxTimeTilAppearance = 300;
+    public float minTimeTilAppearance = 120;
+    public float maxTimeTilAppearance = 300;
 
     [SerializeField]
     private float godIsComingWarning = 30f;

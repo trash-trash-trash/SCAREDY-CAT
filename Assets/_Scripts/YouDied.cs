@@ -26,10 +26,16 @@ public class YouDied : MonoBehaviour
     [SerializeField] private FadeGroup[] fadeGroups;
     [SerializeField] private float groupFadeDuration = 1f;
     [SerializeField] private float delayBetweenGroups = 0.5f;
+
+    public bool fading = false;
     
     public void BENDROWNED()
     {
         lifeTrackerText.text = playerBrain.playerLives.currentLives.ToString();
+
+        if (fading)
+            return;
+        
         StartCoroutine(FadeIn());
     }
 
@@ -40,6 +46,8 @@ public class YouDied : MonoBehaviour
     
     private IEnumerator FadeIn()
     {
+        resetButton.SetActive(false);
+        fading = true;
         // Start everything invisible
         SetAlpha(backgroundImage, 0f);
 
@@ -64,9 +72,22 @@ public class YouDied : MonoBehaviour
             yield return StartCoroutine(
                 FadeGroupIn(group)
             );
-
+            
+            playerBrain.playerLives.LoseALife();
+            lifeTrackerText.text = playerBrain.playerLives.currentLives.ToString();
             yield return new WaitForSeconds(delayBetweenGroups);
         }
+        if (playerBrain.playerLives.currentLives <= 0)
+        {
+            gameOverButton.SetActive(true);
+            resetButton.SetActive(false);
+        }
+        else
+        {
+            gameOverButton.SetActive(false);
+            resetButton.SetActive(true);
+        }
+        fading = false;
     }
 
     private IEnumerator FadeGroupIn(FadeGroup group)
@@ -95,15 +116,7 @@ public class YouDied : MonoBehaviour
 
         foreach (TMP_Text text in group.texts)
             SetAlpha(text, 1f);
-        
-        playerBrain.playerLives.LoseALife();
-        lifeTrackerText.text = playerBrain.playerLives.currentLives.ToString();
 
-        if (playerBrain.playerLives.currentLives <= 0)
-        {
-            gameOverButton.SetActive(true);
-            resetButton.SetActive(false);
-        }
     }
 
     private IEnumerator FadeImage(

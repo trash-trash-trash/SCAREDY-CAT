@@ -12,6 +12,9 @@ public class DeathPlane : MonoBehaviour
             return;
 
         if (playerBrain.health.canTakeDamage)
+        {
             playerBrain.health.ChangeHealth(attackDamage);
+            playerBrain.rb.isKinematic = true;
+        }
     }
 }

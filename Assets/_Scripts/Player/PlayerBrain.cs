@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -144,13 +145,25 @@ public class PlayerBrain : MonoBehaviour
 
     public void Reset()
     {
+        StartCoroutine(ResetRoutine());
+    }
+
+    private IEnumerator ResetRoutine()
+    {
         if (mostRecentCheckPoint != null)
+        {
             transform.position = mostRecentCheckPoint.teleportPoint.position;
+        }
         else
+        {
             transform.position = originalCheckPoint.teleportPoint.position;
-        
-        health.Res();
+        }
+
+        // Wait until the transform position has actually been applied
+        yield return null;
+
         ChangeState(PlayerStates.Idle);
+        health.Res();
     }
     
     public void StartLedgeClimb(Transform target)
