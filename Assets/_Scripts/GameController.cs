@@ -53,6 +53,15 @@ public class GameController : MonoBehaviour
    {
       handOfGod.PauseCountdown();
       youDied.BENDROWNED();
+
+      foreach (PlantBrain pb in plantHealthList)
+      {
+         if(!pb.health.isAlive)
+            pb.plantView.transform.position += new Vector3(0, 3f, 0);
+
+         pb.health.Res();
+         pb.ChangeState(PlantStates.Idle);
+      }
    }
 
    public void Reset()

@@ -15,15 +15,17 @@ public class PlantBrain : MonoBehaviour
 {
     public PlantStates currentState = PlantStates.Idle;
 
+    public Transform plantView;
+
     public PlantFightTrigger plantFightTrigger;
     public Transform playerTransform;
 
     public GameObject plantBullet;
 
     public Health health;
-    
+
     public SpriteRenderer spriteRenderer;
-    
+
     private GameObject prevObj;
 
     public GameObject idleObj;
@@ -33,11 +35,11 @@ public class PlantBrain : MonoBehaviour
 
     public Dictionary<PlantStates, GameObject> statesDict =
         new Dictionary<PlantStates, GameObject>();
-    
+
     public float damageFlashDuration = 1.2f;
     public float damageFlashInterval = 0.05f;
     public float invincibleDuration = 1.5f;
-    
+
     public InvestigateSpot investigateSpot;
 
     public event Action<PlantStates> AnnouncePlantState;
@@ -53,10 +55,26 @@ public class PlantBrain : MonoBehaviour
         statesDict.Add(PlantStates.Defeated, defeatedObj);
 
         ChangeState(PlantStates.Idle);
-
-        plantFightTrigger.AnnouncePlayerDetected += SetTarget;
         health.AnnounceTakeDamage += TakeDamage;
         health.AnnounceDeath += Die;
+
+        plantFightTrigger.AnnouncePlayerDetected += SetTarget;
+        plantFightTrigger.AnnouncePlayerLost += PlayerLost;
+    }
+
+    private void SetTarget(Transform target)
+    {
+        if(currentState==PlantStates.Idle)
+        {
+            playerTransform = target;
+            ChangeState(PlantStates.AggroStand);
+        }
+    }
+
+    private void PlayerLost()
+    {
+        if (health.isAlive)
+            ChangeState(PlantStates.Idle);
     }
 
     private void TakeDamage()
@@ -65,7 +83,7 @@ public class PlantBrain : MonoBehaviour
             return;
         StartCoroutine(DamageFlash());
     }
-    
+
     private IEnumerator DamageFlash()
     {
         float elapsed = 0f;
@@ -87,9 +105,9 @@ public class PlantBrain : MonoBehaviour
         }
 
         spriteRenderer.color = originalColor;
-        
+
         yield return new WaitForSeconds(invincibleDuration);
-        
+
         health.FlipCanTakeDamage(true);
     }
 
@@ -97,17 +115,11 @@ public class PlantBrain : MonoBehaviour
     {
         if (currentState == PlantStates.Defeated)
             return;
-        
+
         spriteRenderer.color = originalColor;
         ChangeState(PlantStates.Defeated);
-        transform.position += new Vector3(0, -3f, 0);
+        plantView.transform.position += new Vector3(0, -3f, 0);
         health.FlipCanTakeDamage(false);
-    }
-
-    private void SetTarget(Transform obj)
-    {
-        playerTransform = obj;
-        ChangeState(PlantStates.AggroStand);
     }
 
     public void ChangeState(PlantStates newState)
@@ -128,8 +140,9 @@ public class PlantBrain : MonoBehaviour
 
     private void OnDisable()
     {
-        plantFightTrigger.AnnouncePlayerDetected -= SetTarget;
         health.AnnounceTakeDamage -= TakeDamage;
         health.AnnounceDeath -= Die;
+        plantFightTrigger.AnnouncePlayerDetected -= SetTarget;
+        plantFightTrigger.AnnouncePlayerLost -= PlayerLost;
     }
 }

@@ -354,6 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a871f9b3ca1780d48b6811c7678556be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBrain
+  maxSpeed: 50
   originalCheckPoint: {fileID: 0}
   mostRecentCheckPoint: {fileID: 0}
   health: {fileID: 3285464024608032691}
@@ -832,7 +833,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3331645290823043003}
+  - {fileID: 5222628912749089340}
   - {fileID: 969037699572846016}
   - {fileID: 6250921414210670263}
   m_Father: {fileID: 1140416277413123128}
@@ -1168,12 +1169,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4312594868703484428}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.41664, y: 0.41664, z: 0.41664}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 659704451970093372}
+  m_Father: {fileID: 5222628912749089340}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1365,6 +1366,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PSClimbingUpLedge
   playerBrain: {fileID: 0}
   climbDuration: 0.5
+--- !u!1 &6083099147169911382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5222628912749089340}
+  m_Layer: 3
+  m_Name: PlayerSpriteAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5222628912749089340
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6083099147169911382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3331645290823043003}
+  m_Father: {fileID: 659704451970093372}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6245066914688282681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1476,6 +1513,8 @@ MonoBehaviour:
   climbingClip: {fileID: 7400000, guid: dfe32cbc2982ece44a82fb64fbe4e123, type: 2}
   takeDamageClip: {fileID: 7400000, guid: c420983fa5c6b444aa4e891db7827601, type: 2}
   hideClip: {fileID: 7400000, guid: ecb68ca8bcd90e945801326d401558cb, type: 2}
+  playerSpriteAnchor: {fileID: 6083099147169911382}
+  anchorPos: {x: 0, y: 0, z: 0}
 --- !u!1 &6554962292149369971
 GameObject:
   m_ObjectHideFlags: 0

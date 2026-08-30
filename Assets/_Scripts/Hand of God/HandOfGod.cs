@@ -8,32 +8,31 @@ public class HandOfGod : MonoBehaviour
     public PlayerBrain playerBrain;
     public Transform playerTransform;
     public Transform handOfGodTransform;
-    
+
     public float yOffsetFollowing;
     public float zOffsetFollowing;
-    
+
     public float currentTime;
 
     public float countdownEndTime;
-    
+
     public float timeTilNextAppearance;
-    
+
     public float minTimeTilAppearance = 120;
     public float maxTimeTilAppearance = 300;
 
-    [SerializeField]
-    private float godIsComingWarning = 30f;
+    [SerializeField] private float godIsComingWarning = 30f;
 
     public event Action AnnounceWarning;
     public event Action<int> AnnounceCountdown;
     public event Action AnnounceArrival;
 
     public bool testing = false;
-
+    public float testingTime = 30;
     private Coroutine countdownCoroutine;
 
     public bool isPaused = false;
-    
+
     public float yOffsetClose = 10f;
     public float godDepartureDuration = 2f;
 
@@ -43,7 +42,7 @@ public class HandOfGod : MonoBehaviour
     public Sprite handOfGod02;
     public Sprite handOfGod03;
     public SpriteRenderer spriteRenderer;
-    
+
     private Coroutine departureCoroutine;
 
     public void StartCountdown()
@@ -52,8 +51,8 @@ public class HandOfGod : MonoBehaviour
             StopCoroutine(countdownCoroutine);
 
         if (testing)
-            timeTilNextAppearance = 30;
-        
+            timeTilNextAppearance = testingTime;
+
         else
         {
             timeTilNextAppearance = Random.Range(
@@ -61,7 +60,7 @@ public class HandOfGod : MonoBehaviour
                 maxTimeTilAppearance
             );
         }
-        
+
         //randomly pick sprite for variety
         spriteRenderer.sprite = Random.Range(0, 3) switch
         {
@@ -69,7 +68,7 @@ public class HandOfGod : MonoBehaviour
             1 => handOfGod02,
             _ => handOfGod03
         };
-        
+
         //randomly flip left/right for variety
         if (Random.value < 0.5f)
             spriteRenderer.transform.eulerAngles = new Vector3(0, 180, 0);
@@ -180,11 +179,10 @@ public class HandOfGod : MonoBehaviour
         currentTime = 0f;
 
         AnnounceArrival?.Invoke();
-        
-        StartCoroutine(MoveHandAway());
 
+        StartCoroutine(MoveHandAway());
     }
-    
+
     private IEnumerator MoveHandAway()
     {
         isDeparting = true;
@@ -215,8 +213,8 @@ public class HandOfGod : MonoBehaviour
         }
 
         isDeparting = false;
-        //
-        // if(playerBrain.currentState!=PlayerStates.Death)
-        //     StartCountdown();
+
+        if (playerBrain.currentState != PlayerStates.Death)
+            StartCountdown();
     }
 }

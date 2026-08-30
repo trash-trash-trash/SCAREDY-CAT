@@ -24,6 +24,7 @@ public enum PlayerStates
 
 public class PlayerBrain : MonoBehaviour
 {
+    public float maxSpeed = 10f;
     public CheckPoint originalCheckPoint;
     public CheckPoint mostRecentCheckPoint;
     
@@ -115,6 +116,12 @@ public class PlayerBrain : MonoBehaviour
         
         else
             ChangeState(PlayerStates.InMenu);
+    }
+    
+
+    private void FixedUpdate()
+    {
+        rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, maxSpeed);
     }
 
     private void Dead()

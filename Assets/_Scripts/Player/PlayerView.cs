@@ -38,6 +38,10 @@ public class PlayerView : MonoBehaviour
 
     public Dictionary<PlayerStates, AnimationClip> animationClipsDict = new Dictionary<PlayerStates, AnimationClip>();
 
+    public GameObject playerSpriteAnchor;
+
+    public Vector3 anchorPos;
+
     void Awake()
     {
         originalColor = spriteRenderer.color;
@@ -66,6 +70,7 @@ public class PlayerView : MonoBehaviour
         //playerBrain.AnnounceHidden += FlipHiding;
         playerBrain.health.AnnounceCurrentHealth += SetHealth;
         playerBrain.AnnounceCanInvestigate += SetInvestigateText;
+        anchorPos = playerSpriteAnchor.transform.localPosition;
     }
 
     private void SetInvestigateText(bool input, string newText)
@@ -121,6 +126,18 @@ public class PlayerView : MonoBehaviour
                     spriteObj.transform.eulerAngles = new Vector3(0, 180, 0);
                 else
                     spriteObj.transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+
+            if (newState == PlayerStates.ChargingWallJump || newState == PlayerStates.StickingToWall)
+            {
+                if (playerBrain.leftWall)
+                {
+                    playerSpriteAnchor.transform.localPosition = new Vector3(playerSpriteAnchor.transform.localPosition.x + 0.54f, playerSpriteAnchor.transform.localPosition.y, playerSpriteAnchor.transform.localPosition.z);
+                }
+            }
+            else
+            {
+                playerSpriteAnchor.transform.localPosition = anchorPos;
             }
         }
 

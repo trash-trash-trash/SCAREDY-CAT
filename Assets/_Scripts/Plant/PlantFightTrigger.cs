@@ -3,22 +3,26 @@ using UnityEngine;
 
 public class PlantFightTrigger : MonoBehaviour
 {
-    public bool lookingForPlayer = true;
-
     public event Action<Transform> AnnouncePlayerDetected;
+    public event Action AnnouncePlayerLost;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (!lookingForPlayer)
-            return;
-
         PlayerBrain playerBrain = other.GetComponent<PlayerBrain>();
 
         if (playerBrain == null)
             return;
 
-        lookingForPlayer = false;
-
         AnnouncePlayerDetected?.Invoke(other.transform);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        PlayerBrain playerBrain = other.GetComponent<PlayerBrain>();
+
+        if (playerBrain == null)
+            return;
+
+        AnnouncePlayerLost?.Invoke();
     }
 }
