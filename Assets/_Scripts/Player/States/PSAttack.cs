@@ -7,6 +7,7 @@ public class PSAttack : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
+        playerBrain.meow.PlayRandom();
         StartCoroutine(AttackTime());
     }
 

@@ -105,6 +105,9 @@ public class GameController : MonoBehaviour
    {
       if(context.performed)
       {
+         if (mainMenu.currentState != MainMenuStates.InGame)
+            return;
+         
          paused = !paused;
          if (paused)
          {

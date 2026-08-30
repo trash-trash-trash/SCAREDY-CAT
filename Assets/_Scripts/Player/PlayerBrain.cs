@@ -35,6 +35,8 @@ public class PlayerBrain : MonoBehaviour
     public PlayerAttack playerAttack;
     public PlayerMovement playerMovement;
     public PlayerJump playerJump;
+
+    public PickAndPlayRandomSound meow;
     
     public LayerCheck groundCheck;
     public LayerCheck leftWallCheck;
