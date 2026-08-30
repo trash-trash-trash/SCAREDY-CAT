@@ -73,6 +73,11 @@ public class PlayerView : MonoBehaviour
         anchorPos = playerSpriteAnchor.transform.localPosition;
     }
 
+    void OnEnable()
+    {
+        lifeSlider.value = playerBrain.health.currentHealth;
+    }
+
     private void SetInvestigateText(bool input, string newText)
     {
         if (input)
