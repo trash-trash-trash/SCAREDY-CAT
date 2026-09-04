@@ -10,6 +10,8 @@ public class DogView : MonoBehaviour
    public AnimationClip chargeClip;
    public AnimationClip jumpClip;
    public AnimationClip defeatedClip;
+
+    public AnimationClip chargeAttackClip;
    
    public Dictionary<DogStates, AnimationClip> statesDict = new Dictionary<DogStates, AnimationClip>();
 
@@ -18,7 +20,7 @@ public class DogView : MonoBehaviour
       statesDict.Add(DogStates.Idle, idleClip);
       statesDict.Add(DogStates.AggroStand, chargeClip);
       statesDict.Add(DogStates.AttackJump, jumpClip);
-      statesDict.Add(DogStates.AttackHorizontal, idleClip);
+      statesDict.Add(DogStates.AttackHorizontal, chargeAttackClip);
       statesDict.Add(DogStates.Defeated, defeatedClip);
 
       dogBrain.AnnounceDogState += SetClip;
