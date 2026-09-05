@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 public class PlayerJump : MonoBehaviour
 {
     [Header("Jump Settings You Can Fiddle With")]
-    [SerializeField] private float minJumpPower = 5f;
-    [SerializeField] private float maxJumpPower = 15f;
+    public float minJumpPower = 5f;
+    public float maxJumpPower = 15f;
     
     [SerializeField] private float minHorizontalPower = 2f;
     [SerializeField] private float maxHorizontalPower = 10f;
@@ -26,6 +26,9 @@ public class PlayerJump : MonoBehaviour
     public PlayerMovement playerMovement;
 
     //true for charging, false for releasing
+    
+    public bool invertedJump = false;
+    
     public event Action<bool> AnnounceChargingJump; 
     
     private void OnEnable()
@@ -88,6 +91,8 @@ public class PlayerJump : MonoBehaviour
             return;
 
         chargingJump = false;
+        
+        float verticalMultiplier = 1.5f;
 
         float chargePercent = Mathf.Clamp01(chargeTimer / chargeTime);
 
@@ -109,14 +114,19 @@ public class PlayerJump : MonoBehaviour
         float horizontalDirection = Mathf.Sign(moveInput.x);
 
         // If there is no left/right input, don't apply horizontal force
+        // IE, jump straight up
+        //increase vertical power
         if (Mathf.Abs(moveInput.x) < 0.01f)
         {
             horizontalDirection = 0f;
+            verticalMultiplier = 1.8f;
         }
+
+        float verticalDirection = invertedJump ? -1f : 1f;
 
         Vector3 force = new Vector3(
             horizontalDirection * horizontalPower,
-            verticalPower,
+            verticalPower * verticalMultiplier * verticalDirection,
             0f
         );
 
@@ -126,6 +136,11 @@ public class PlayerJump : MonoBehaviour
         jumpPower = minJumpPower;
         
         AnnounceChargingJump?.Invoke(false);
+    }
+
+    public void FlipInvertedJump(bool input)
+    {
+        invertedJump = input;
     }
     
     private void OnDisable()

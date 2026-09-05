@@ -19,6 +19,8 @@ public enum PlayerStates
     Hiding,
     Unhiding,
     TakeDamage,
+    StickingToRoof,
+    ChargingRoofJump,
     Death
 }
 
@@ -41,12 +43,13 @@ public class PlayerBrain : MonoBehaviour
     public LayerCheck groundCheck;
     public LayerCheck leftWallCheck;
     public LayerCheck rightWallCheck;
+    public LayerCheck roofCheck;
 
     public LayerCheck currentWallCheck;
 
     public Rigidbody rb;
     
-    public Transform ledgeTarget;
+    public Ledge currentLedge;
     
     public Vector3 positionBeforeHiding = Vector3.zero;
 
@@ -67,6 +70,8 @@ public class PlayerBrain : MonoBehaviour
     public GameObject fallingObj;
     public GameObject stickingToWallObj;
     public GameObject chargingWallJumpObj;
+    public GameObject stickingToRoofObj;
+    public GameObject chargingRoofJumpObj;
     public GameObject climbingUpLedgeObj;
     public GameObject hidingObj;
     public GameObject unhidingObj;
@@ -88,6 +93,8 @@ public class PlayerBrain : MonoBehaviour
 
     public event Action<bool, string> AnnounceCanInvestigate;
 
+    public event Action AnnounceFlipSprite180;
+
     public bool naomiTesting = false;
 
     public bool testing = false;
@@ -105,6 +112,8 @@ public class PlayerBrain : MonoBehaviour
         statesDict.Add(PlayerStates.StickingToWall, stickingToWallObj);
         statesDict.Add(PlayerStates.ChargingWallJump,  chargingWallJumpObj);
         statesDict.Add(PlayerStates.ClimbingUpLedge, climbingUpLedgeObj);
+        statesDict.Add(PlayerStates.StickingToRoof, stickingToRoofObj);
+        statesDict.Add(PlayerStates.ChargingRoofJump, chargingRoofJumpObj);
         statesDict.Add(PlayerStates.Hiding, hidingObj);
         statesDict.Add(PlayerStates.Unhiding, unhidingObj);
         statesDict.Add(PlayerStates.TakeDamage, takeDamageObj);
@@ -138,6 +147,9 @@ public class PlayerBrain : MonoBehaviour
 
     public void ChangeState(PlayerStates newState)
     {
+        if (newState == currentState)
+            return;
+        
         if (statesDict.TryGetValue(newState, out GameObject stateObj))
         {
             if (prevObj != null)
@@ -175,9 +187,9 @@ public class PlayerBrain : MonoBehaviour
         health.Res();
     }
     
-    public void StartLedgeClimb(Transform target)
+    public void StartLedgeClimb(Ledge newLedge)
     {
-        ledgeTarget = target;
+        currentLedge = newLedge;
         ChangeState(PlayerStates.ClimbingUpLedge);
     }
     
@@ -200,6 +212,11 @@ public class PlayerBrain : MonoBehaviour
     public void HardFlip()
     {
         AnnounceHardFlip?.Invoke();
+    }
+
+    public void FlipSprite180()
+    {
+        AnnounceFlipSprite180?.Invoke();
     }
 
     private void OnDestroy()

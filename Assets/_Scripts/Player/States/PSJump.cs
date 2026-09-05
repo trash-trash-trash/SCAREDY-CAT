@@ -24,13 +24,7 @@ public class PSJump : PlayerStateBase
         if (!leftGround)
             return;
         
-        // Player has reached the apex and is now falling
-        if (playerBrain.rb.linearVelocity.y < 0f)
-        {
-            playerBrain.ChangeState(PlayerStates.Falling);
-            return;
-        }
-        
+        //wall checks
         if(playerBrain.leftWallCheck.targetLayerDetected )
         {
             playerBrain.leftWall = true;
@@ -43,7 +37,21 @@ public class PSJump : PlayerStateBase
             playerBrain.currentWallCheck  = playerBrain.rightWallCheck;
             playerBrain.ChangeState(PlayerStates.StickingToWall);
         }
+        
+        //ground check
         else if (playerBrain.groundCheck.targetLayerDetected)
             playerBrain.ChangeState(PlayerStates.Idle);
+        
+        //roof check
+        else if (playerBrain.roofCheck.targetLayerDetected)
+        {
+            playerBrain.ChangeState(PlayerStates.StickingToRoof);
+        }    
+        
+        // Player has reached the apex and is now falling
+        else if (playerBrain.rb.linearVelocity.y < 0f)
+        {
+            playerBrain.ChangeState(PlayerStates.Falling);
+        }
     }
 }

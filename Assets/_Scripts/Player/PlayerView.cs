@@ -16,7 +16,7 @@ public class PlayerView : MonoBehaviour
 
     public GameObject investigateTextObj;
     public TMP_Text investigateText;
-    
+
     public GameObject testCanvasObj;
     public TMP_Text playerStateText;
 
@@ -53,6 +53,11 @@ public class PlayerView : MonoBehaviour
         animationClipsDict.Add(PlayerStates.ChargingJump, chargeJumpClip);
         animationClipsDict.Add(PlayerStates.Falling, fallingClip);
         animationClipsDict.Add(PlayerStates.StickingToWall, climbingClip);
+
+        //reusing sprites
+        animationClipsDict.Add(PlayerStates.StickingToRoof, climbingClip);
+        animationClipsDict.Add(PlayerStates.ChargingRoofJump, chargeJumpClip);
+
         animationClipsDict.Add(PlayerStates.TakeDamage, takeDamageClip);
         animationClipsDict.Add(PlayerStates.Hiding, hideClip);
         animationClipsDict.Add(PlayerStates.Unhiding, jumpingClip);
@@ -71,6 +76,16 @@ public class PlayerView : MonoBehaviour
         playerBrain.health.AnnounceCurrentHealth += SetHealth;
         playerBrain.AnnounceCanInvestigate += SetInvestigateText;
         anchorPos = playerSpriteAnchor.transform.localPosition;
+        playerBrain.AnnounceFlipSprite180 += FlipSprite180;
+    }
+
+    private void FlipSprite180()
+    {
+        Vector3 rotation = spriteObj.transform.eulerAngles;
+
+        rotation.y = rotation.y == 0f ? 180f : 0f;
+
+        spriteObj.transform.eulerAngles = rotation;
     }
 
     void OnEnable()
@@ -120,24 +135,25 @@ public class PlayerView : MonoBehaviour
     private void SetPlayerState(PlayerStates newState)
     {
         playerStateText.text = newState.ToString();
-
         if (animationClipsDict.TryGetValue(newState, out AnimationClip clip))
         {
             playerAnimator.Play(clip.name);
 
-            if (newState == PlayerStates.ClimbingUpLedge)
-            {
-                if (playerBrain.leftWall)
-                    spriteObj.transform.eulerAngles = new Vector3(0, 180, 0);
-                else
-                    spriteObj.transform.eulerAngles = new Vector3(0, 0, 0);
-            }
+            // if (newState == PlayerStates.ClimbingUpLedge)
+            // {
+            //     if (playerBrain.leftWall)
+            //         spriteObj.transform.eulerAngles = new Vector3(0, 180, 0);
+            //     else
+            //         spriteObj.transform.eulerAngles = new Vector3(0, 0, 0);
+            // }
 
             if (newState == PlayerStates.ChargingWallJump || newState == PlayerStates.StickingToWall)
             {
                 if (playerBrain.leftWall)
                 {
-                    playerSpriteAnchor.transform.localPosition = new Vector3(playerSpriteAnchor.transform.localPosition.x + 0.54f, playerSpriteAnchor.transform.localPosition.y, playerSpriteAnchor.transform.localPosition.z);
+                    playerSpriteAnchor.transform.localPosition = new Vector3(
+                        playerSpriteAnchor.transform.localPosition.x + 0.54f,
+                        playerSpriteAnchor.transform.localPosition.y, playerSpriteAnchor.transform.localPosition.z);
                 }
             }
             else
@@ -157,42 +173,100 @@ public class PlayerView : MonoBehaviour
         }
     }
 
-    //flip sprite according to rb movement, probably not the way to go
+//flip sprite according to rb movement, probably not the way to go
 
-    // void Update()
-    // {
-    //     if (playerBrain.rb.linearVelocity.x > 0.01f)
-    //     {
-    //         spriteObj.transform.eulerAngles = new Vector3(0, 0, 0);
-    //     }
-    //     else if (playerBrain.rb.linearVelocity.x < -0.01f)
-    //     {
-    //         spriteObj.transform.eulerAngles = new Vector3(0, 180, 0);
-    //     }
-    // }
+// void Update()
+// {
+//     if (playerBrain.rb.linearVelocity.x > 0.01f)
+//     {
+//         spriteObj.transform.eulerAngles = new Vector3(0, 0, 0);
+//     }
+//     else if (playerBrain.rb.linearVelocity.x < -0.01f)
+//     {
+//         spriteObj.transform.eulerAngles = new Vector3(0, 180, 0);
+//     }
+// }
 
-    //hard flip (for wall jumps)
+//hard flip (for wall jumps)
     public void HardFlip()
     {
-        if (spriteObj.transform.eulerAngles.y > 0f)
-            spriteObj.transform.eulerAngles = new Vector3(0, 0, 0);
-        else
-            spriteObj.transform.eulerAngles = new Vector3(0, 180, 0);
+        playerBrain.playerMovement.facingDirection *= -1f;
     }
 
-    //only flip during said states
     void Update()
     {
-        if (playerBrain.currentState == PlayerStates.Walking ||
-            playerBrain.currentState == PlayerStates.ChargingAttack ||
-            playerBrain.currentState == PlayerStates.ChargingJump)
+        // These states should NOT update the sprite's facing direction.
+        // Whatever Y rotation the sprite currently has should be preserved.
+        //
+        // We DO reset Z to 0 because these states should not remain
+        // visually rotated onto the roof.
+        bool preserveFacing =
+            playerBrain.currentState == PlayerStates.ClimbingUpLedge ||
+            playerBrain.currentState == PlayerStates.Jumping ||
+            playerBrain.currentState == PlayerStates.TakeDamage ||
+            playerBrain.currentState == PlayerStates.Falling;
+
+        if (preserveFacing)
         {
-            spriteObj.transform.eulerAngles = new Vector3(
-                0,
-                playerBrain.playerMovement.facingDirection == 1f ? 0f : 180f,
-                0
-            );
+            Vector3 rotation = spriteObj.transform.eulerAngles;
+
+            // Reset the roof rotation, but leave Y (facing) untouched.
+            rotation.z = 0f;
+
+            spriteObj.transform.eulerAngles = rotation;
+            return;
         }
+
+
+        // Sticking to the roof uses the normal facing direction,
+        // but inverted because the player is upside down.
+        if (playerBrain.currentState == PlayerStates.StickingToRoof)
+        {
+            float yRotation =
+                playerBrain.playerMovement.facingDirection == 1f
+                    ? 180f
+                    : 0f;
+
+            spriteObj.transform.eulerAngles = new Vector3(
+                0f,
+                yRotation,
+                90f
+            );
+
+            return;
+        }
+
+
+        // Charging a roof jump uses the inverted facing direction,
+// with an additional 180° rotation on the Z axis.
+        if (playerBrain.currentState == PlayerStates.ChargingRoofJump)
+        {
+            float yRotation =
+                playerBrain.playerMovement.facingDirection == 1f
+                    ? 180f
+                    : 0f;
+
+            spriteObj.transform.eulerAngles = new Vector3(
+                0f,
+                yRotation,
+                180f
+            );
+
+            return;
+        }
+
+
+        // All other normal states use the player's facing direction.
+        float normalYRotation =
+            playerBrain.playerMovement.facingDirection == 1f
+                ? 0f
+                : 180f;
+
+        spriteObj.transform.eulerAngles = new Vector3(
+            0f,
+            normalYRotation,
+            0f
+        );
     }
 
     void OnDisable()
@@ -202,5 +276,6 @@ public class PlayerView : MonoBehaviour
         playerBrain.AnnouncePlayerState -= SetPlayerState;
         playerBrain.AnnounceCanHide -= SetCanHidePrompt;
         playerBrain.health.AnnounceCurrentHealth -= SetHealth;
+        playerBrain.AnnounceFlipSprite180 -= FlipSprite180;
     }
 }
