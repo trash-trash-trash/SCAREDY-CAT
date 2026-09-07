@@ -10,6 +10,7 @@ public class PSJump : PlayerStateBase
     {
         base.OnEnable();
         leftGround = false;
+        playerBrain.platformCollisionController.SetIgnoreWhileRising(true);
         StartCoroutine(LeaveGround());
     }
 
@@ -53,5 +54,10 @@ public class PSJump : PlayerStateBase
         {
             playerBrain.ChangeState(PlayerStates.Falling);
         }
+    }
+
+    void OnDisable()
+    {
+        playerBrain.platformCollisionController.SetIgnoreWhileRising(false);
     }
 }

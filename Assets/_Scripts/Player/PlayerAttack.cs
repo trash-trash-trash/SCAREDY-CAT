@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,6 +34,11 @@ public class PlayerAttack : MonoBehaviour
     public float chargeTimer;
     public float attackPower;
 
+    [SerializeField] private float attackDuration = 0.3f;
+
+    private HashSet<Health> hitTargets = new HashSet<Health>();
+    private Coroutine attackCoroutine;
+    
     private Collider[] attackResults;
 
     private Coroutine attackVisualCoroutine;

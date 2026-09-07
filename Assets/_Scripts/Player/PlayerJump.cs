@@ -77,6 +77,14 @@ public class PlayerJump : MonoBehaviour
         }
     }
 
+    public void CancelJump()
+    {
+        canJump = false;
+        chargeTimer = 0f;
+        jumpPower = minJumpPower;
+        AnnounceChargingJump?.Invoke(false);
+    }
+    
     private void StartCharging()
     {
         chargingJump = true;
@@ -85,7 +93,7 @@ public class PlayerJump : MonoBehaviour
         AnnounceChargingJump?.Invoke(true);
     }
 
-    private void ReleaseJump()
+    public void ReleaseJump()
     {
         if (!chargingJump)
             return;

@@ -14,6 +14,13 @@ public class PSFalling: PlayerStateBase
 
     void Update()
     {
+        //0 / deadzone for controllers
+        //holding down while falling lets you fall thru platforms
+        if(playerBrain.playerMovement.moveInput.y < 0)
+            playerBrain.platformCollisionController.SetIgnoring(true);
+        else
+            playerBrain.platformCollisionController.SetIgnoring(false);
+        
         if(playerBrain.leftWallCheck.targetLayerDetected )
         {
             playerBrain.leftWall = true;
@@ -28,5 +35,11 @@ public class PSFalling: PlayerStateBase
         }
         else if (playerBrain.groundCheck.targetLayerDetected)
             playerBrain.ChangeState(PlayerStates.Idle);
+    }
+
+    void OnDisable()
+    {
+        
+        playerBrain.platformCollisionController.SetIgnoring(false);
     }
 }

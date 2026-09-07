@@ -21,6 +21,7 @@ public enum PlayerStates
     TakeDamage,
     StickingToRoof,
     ChargingRoofJump,
+    PlatformDownJump,
     Death
 }
 
@@ -37,6 +38,8 @@ public class PlayerBrain : MonoBehaviour
     public PlayerAttack playerAttack;
     public PlayerMovement playerMovement;
     public PlayerJump playerJump;
+    
+    public PlatformCollisionController platformCollisionController;
 
     public PickAndPlayRandomSound meow;
     
@@ -44,6 +47,7 @@ public class PlayerBrain : MonoBehaviour
     public LayerCheck leftWallCheck;
     public LayerCheck rightWallCheck;
     public LayerCheck roofCheck;
+    public LayerCheck platformCheck;
 
     public LayerCheck currentWallCheck;
 
@@ -76,6 +80,7 @@ public class PlayerBrain : MonoBehaviour
     public GameObject hidingObj;
     public GameObject unhidingObj;
     public GameObject takeDamageObj;
+    public GameObject platformDownJumpObj;
     public GameObject deathObj;
     
     public Dictionary<PlayerStates, GameObject> statesDict =
@@ -117,6 +122,7 @@ public class PlayerBrain : MonoBehaviour
         statesDict.Add(PlayerStates.Hiding, hidingObj);
         statesDict.Add(PlayerStates.Unhiding, unhidingObj);
         statesDict.Add(PlayerStates.TakeDamage, takeDamageObj);
+        statesDict.Add(PlayerStates.PlatformDownJump, platformDownJumpObj);
         statesDict.Add(PlayerStates.Death, deathObj);
 
         health.AnnounceTakeDamage += TakeDamage;

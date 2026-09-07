@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PSIdle : PlayerStateBase
 {
+    //assume 0, make -0.5f etc for controller deadzones
+    public float deadZone = 0;
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -18,13 +21,26 @@ public class PSIdle : PlayerStateBase
 
     private void ChangeAttackState(bool chargingAttack)
     {
-        if(chargingAttack)
+        if (chargingAttack)
             playerBrain.ChangeState(PlayerStates.ChargingAttack);
     }
 
     private void ChangeJumpState(bool chargingJump)
     {
-        if (chargingJump)
+        //if you're on a platform
+        if (playerBrain.platformCheck.targetLayerDetected)
+        {
+            //and you're holding down
+            //jump down thru a platform
+            if (chargingJump)
+                if (playerBrain.playerMovement.moveInput.y < deadZone)
+                    playerBrain.ChangeState(PlayerStates.PlatformDownJump);
+                else
+                    playerBrain.ChangeState(PlayerStates.ChargingJump);
+        }
+
+        //else charge jump
+        else if (chargingJump)
             playerBrain.ChangeState(PlayerStates.ChargingJump);
     }
 
@@ -32,7 +48,7 @@ public class PSIdle : PlayerStateBase
     {
         if (!playerBrain.groundCheck.targetLayerDetected)
             playerBrain.ChangeState(PlayerStates.Falling);
-        
+
         if (Mathf.Abs(playerBrain.playerMovement.moveInput.x) > 0.01f)
             playerBrain.ChangeState(PlayerStates.Walking);
     }
