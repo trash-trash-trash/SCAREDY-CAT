@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PSStickToWall : PlayerStateBase
 {
+    public float deadZone = 0f;
+
     public override void OnEnable()
     {
         base.OnEnable();
@@ -15,7 +17,18 @@ public class PSStickToWall : PlayerStateBase
 
     private void ChangeState(bool chargingJump)
     {
-        if(chargingJump)
+        //fall down if holding down
+        if(playerBrain.playerMovement.moveInput.y < deadZone)
+        {
+            if (chargingJump)
+            {
+                FlipLookingForWallChecks(false);
+                playerBrain.playerJump.CancelJump();
+                playerBrain.ChangeState(PlayerStates.Falling);
+            }
+        }
+
+        else if (chargingJump)
             playerBrain.ChangeState(PlayerStates.ChargingWallJump);
     }
 
@@ -23,15 +36,15 @@ public class PSStickToWall : PlayerStateBase
     {
         // if(playerBrain.ledgeCheck.targetLayerDetected)
         //     playerBrain.ChangeState(PlayerStates.ClimbingUpLedge);
-        
-        if(playerBrain.groundCheck.targetLayerDetected)
+
+        if (playerBrain.groundCheck.targetLayerDetected)
             playerBrain.ChangeState(PlayerStates.Idle);
-        
+
         else if (!playerBrain.currentWallCheck.targetLayerDetected && !playerBrain.groundCheck.targetLayerDetected)
         {
             playerBrain.currentWallCheck = null;
             playerBrain.ChangeState(PlayerStates.Falling);
-        }       
+        }
     }
 
     void OnDisable()

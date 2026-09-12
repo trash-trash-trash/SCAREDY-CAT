@@ -11,10 +11,13 @@ public class DogFightController : MonoBehaviour
     public GameController gameController;
     
     public GameObject roofObj;
+
+    public bool dogFightOn = true;
     
     private void Awake()
     {
-        WaitForTrigger();
+        if(dogFightOn)
+            WaitForTrigger();
     }
 
     public void WaitForTrigger()

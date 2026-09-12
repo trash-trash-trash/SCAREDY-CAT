@@ -21,25 +21,28 @@ public class PSFalling: PlayerStateBase
         else
             playerBrain.platformCollisionController.SetIgnoring(false);
         
-        if(playerBrain.leftWallCheck.targetLayerDetected )
+        if(playerBrain.lookingForWallChecks)
         {
-            playerBrain.leftWall = true;
-            playerBrain.currentWallCheck  = playerBrain.leftWallCheck;
-            playerBrain.ChangeState(PlayerStates.StickingToWall);
+            if (playerBrain.leftWallCheck.targetLayerDetected)
+            {
+                playerBrain.leftWall = true;
+                playerBrain.currentWallCheck = playerBrain.leftWallCheck;
+                playerBrain.ChangeState(PlayerStates.StickingToWall);
+            }
+            else if (playerBrain.rightWallCheck.targetLayerDetected)
+            {
+                playerBrain.leftWall = false;
+                playerBrain.currentWallCheck = playerBrain.rightWallCheck;
+                playerBrain.ChangeState(PlayerStates.StickingToWall);
+            }
         }
-        else if (playerBrain.rightWallCheck.targetLayerDetected)
-        {
-            playerBrain.leftWall = false;
-            playerBrain.currentWallCheck  = playerBrain.rightWallCheck;
-            playerBrain.ChangeState(PlayerStates.StickingToWall);
-        }
-        else if (playerBrain.groundCheck.targetLayerDetected)
+        
+        if (playerBrain.groundCheck.targetLayerDetected)
             playerBrain.ChangeState(PlayerStates.Idle);
     }
 
     void OnDisable()
     {
-        
         playerBrain.platformCollisionController.SetIgnoring(false);
     }
 }

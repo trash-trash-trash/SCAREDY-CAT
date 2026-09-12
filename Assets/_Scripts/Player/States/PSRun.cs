@@ -12,6 +12,9 @@ public class PSRun : PlayerStateBase
         playerBrain.playerMovement.readingLeftRight = true;
         playerBrain.playerJump.AnnounceChargingJump += ChangeState;
         playerBrain.playerAttack.AnnounceChargingAttack += ChangeAttackState;
+        
+        if(!playerBrain.lookingForWallChecks)
+            FlipLookingForWallChecks(true);
     }
     
     private void ChangeAttackState(bool chargingAttack)

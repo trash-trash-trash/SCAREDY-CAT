@@ -190,7 +190,9 @@ public class PlayerView : MonoBehaviour
 //hard flip (for wall jumps)
     public void HardFlip()
     {
-        playerBrain.playerMovement.facingDirection *= -1f;
+        Vector3 rotation = spriteObj.transform.eulerAngles;
+        rotation.y = rotation.y == 0f ? 180f : 0f;
+        spriteObj.transform.eulerAngles = rotation;
     }
 
     void Update()
@@ -204,7 +206,9 @@ public class PlayerView : MonoBehaviour
             playerBrain.currentState == PlayerStates.ClimbingUpLedge ||
             playerBrain.currentState == PlayerStates.Jumping ||
             playerBrain.currentState == PlayerStates.TakeDamage ||
-            playerBrain.currentState == PlayerStates.Falling;
+            playerBrain.currentState == PlayerStates.Falling ||
+        playerBrain.currentState == PlayerStates.StickingToWall ||
+        playerBrain.currentState == PlayerStates.ChargingWallJump;
 
         if (preserveFacing)
         {

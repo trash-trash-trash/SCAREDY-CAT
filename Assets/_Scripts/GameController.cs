@@ -6,183 +6,193 @@ using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
-   //mixing model / view but fuck it game jam we ball
+    //mixing model / view but fuck it game jam we ball
 
-   public List<PlantBrain> plantHealthList = new List<PlantBrain>();
-   
-   public DogFightController dogFight;
-   public PlayerBrain playerBrain;
-   public PlayerInputs playerInput;
-   public HandOfGod handOfGod;
-   public MainMenu mainMenu;
-   public YouDied youDied;
+    public List<PlantBrain> plantHealthList = new List<PlantBrain>();
 
-   public bool startedGame = false;
+    public DogFightController dogFight;
+    public PlayerBrain playerBrain;
+    public PlayerInputs playerInput;
+    public HandOfGod handOfGod;
+    public MainMenu mainMenu;
+    public YouDied youDied;
 
-   public float fadeTime = 1f;
-   public float displayTime = 1f;
+    public bool startedGame = false;
 
-   public TMP_Text godIsComingText;
+    public float fadeTime = 1f;
+    public float displayTime = 1f;
 
-   public bool paused = false;
-   public GameObject pausedObj;
+    public TMP_Text godIsComingText;
 
-   public float endGameWait = 5f;
+    public bool paused = false;
+    public GameObject pausedObj;
 
-   public bool endedGame = false;
+    public float endGameWait = 5f;
 
-   void Start()
-   {
-      handOfGod.AnnounceWarning += FadeTextInOut;
-      handOfGod.AnnounceArrival += CheckPlayerHidden;
-      mainMenu.AnnounceMainMenuState += StartGame;
-      playerInput.AnnouncePause += PauseUnpause;
-      playerBrain.health.AnnounceDeath += BENDROWNED;
-   }
+    public bool endedGame = false;
 
-   public void GameOver()
-   {
-      Debug.Log("GAME OVER BUTTON");
-      StartCoroutine(GameOverCoro());
-   }
+    public bool handOfGodTurnedOnAtPlay = true;
 
-   IEnumerator GameOverCoro()
-   {
-      Debug.Log("SUP");
-      startedGame = false;
-      youDied.youDiedObj.SetActive(false);
-      playerBrain.playerLives.currentLives = 9;
-      playerBrain.ChangeState(PlayerStates.InMenu);
-      handOfGod.PauseCountdown();
-      dogFight.ResetFight();
-      
-      yield return null;
-      
-      playerBrain.rb.linearVelocity = Vector3.zero;
-      playerBrain.rb.angularVelocity = Vector3.zero;
+    void Start()
+    {
+        handOfGod.AnnounceWarning += FadeTextInOut;
+        handOfGod.AnnounceArrival += CheckPlayerHidden;
+        mainMenu.AnnounceMainMenuState += StartGame;
+        playerInput.AnnouncePause += PauseUnpause;
+        playerBrain.health.AnnounceDeath += BENDROWNED;
+    }
 
-      playerBrain.rb.position =
-         playerBrain.originalCheckPoint.teleportPoint.position;
-      
-      yield return null;
-      mainMenu.ChangeState(MainMenuStates.PressStart);
+    private void StartGame(MainMenuStates newState)
+    {
+        if (!startedGame)
+        {
+            if (newState == MainMenuStates.InGame)
+            {
+                if (handOfGodTurnedOnAtPlay)
+                {
+                    handOfGod.StartCountdown();
+                }
+                else
+                {
+                    handOfGod.handOfGodTransform.gameObject.SetActive(false);
+                }
 
-      playerBrain.health.Res();
-      endedGame = false;
-   }
+                playerBrain.ChangeState(PlayerStates.Idle);
+                startedGame = true;
+            }
+        }
+    }
 
-   private void BENDROWNED()
-   {
-      handOfGod.PauseCountdown();
-      youDied.BENDROWNED();
+    public void GameOver()
+    {
+        Debug.Log("GAME OVER BUTTON");
+        StartCoroutine(GameOverCoro());
+    }
 
-      foreach (PlantBrain pb in plantHealthList)
-      {
-         if(!pb.health.isAlive)
-            pb.plantView.transform.position += new Vector3(0, 3f, 0);
+    IEnumerator GameOverCoro()
+    {
+        Debug.Log("SUP");
+        startedGame = false;
+        youDied.youDiedObj.SetActive(false);
+        playerBrain.playerLives.currentLives = 9;
+        playerBrain.ChangeState(PlayerStates.InMenu);
+        handOfGod.PauseCountdown();
+        dogFight.ResetFight();
 
-         pb.health.Res();
-         pb.ChangeState(PlantStates.Idle);
-      }
-   }
+        yield return null;
 
-   public void Reset()
-   {
-      handOfGod.StartCountdown();
-      youDied.BENGOTCPR();
-      playerBrain.Reset();
-   }
+        playerBrain.rb.linearVelocity = Vector3.zero;
+        playerBrain.rb.angularVelocity = Vector3.zero;
 
-   private void CheckPlayerHidden()
-   {
-      if (playerBrain.currentState != PlayerStates.Hiding)
-      {
-         playerBrain.health.ChangeHealth(-777);
-      }
-   }
+        playerBrain.rb.position =
+            playerBrain.originalCheckPoint.teleportPoint.position;
 
-   private void PauseUnpause(InputAction.CallbackContext context)
-   {
-      if(context.performed)
-      {
-         if (mainMenu.currentState != MainMenuStates.InGame)
-            return;
-         
-         paused = !paused;
-         if (paused)
-         {
-            pausedObj.SetActive(true);
-            Time.timeScale = 0f;
-         }
-         else
-         {
-            pausedObj.SetActive(false);
-            Time.timeScale = 1f;
-         }
-      }
-   }
+        yield return null;
+        mainMenu.ChangeState(MainMenuStates.PressStart);
 
-   private void FadeTextInOut()
-   {
-      StartCoroutine(FadeTextCoro());
-   }
+        playerBrain.health.Res();
+        endedGame = false;
+    }
 
-   private IEnumerator FadeTextCoro()
-   {
-      //fade in
-      for (float t = 0; t < fadeTime; t += Time.deltaTime)
-      {
-         godIsComingText.alpha = t / fadeTime;
-         yield return null;
-      }
+    private void BENDROWNED()
+    {
+        handOfGod.PauseCountdown();
+        youDied.BENDROWNED();
 
-      godIsComingText.alpha = 1f;
+        foreach (PlantBrain pb in plantHealthList)
+        {
+            if (!pb.health.isAlive)
+                pb.plantView.transform.position += new Vector3(0, 3f, 0);
 
-      //display
-      yield return new WaitForSeconds(displayTime);
+            pb.health.Res();
+            pb.ChangeState(PlantStates.Idle);
+        }
+    }
 
-      //fade out
-      for (float t = 0; t < fadeTime; t += Time.deltaTime)
-      {
-         godIsComingText.alpha = 1f - (t / fadeTime);
-         yield return null;
-      }
+    public void Reset()
+    {
+        handOfGod.StartCountdown();
+        youDied.BENGOTCPR();
+        playerBrain.Reset();
+    }
 
-      godIsComingText.alpha = 0f;
-   }
-   
-   private void StartGame(MainMenuStates newState)
-   {
-      if(!startedGame)
-      {
-         if (newState == MainMenuStates.InGame)
-         {
-            handOfGod.StartCountdown();
-            playerBrain.ChangeState(PlayerStates.Idle);
-            startedGame = true;
-         }
-      }
-   }
+    private void CheckPlayerHidden()
+    {
+        if (playerBrain.currentState != PlayerStates.Hiding)
+        {
+            playerBrain.health.ChangeHealth(-777);
+        }
+    }
 
-   public void EndGame()
-   {
-      if(!endedGame)
-         StartCoroutine(EndGameCoro());
-   }
+    private void PauseUnpause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (mainMenu.currentState != MainMenuStates.InGame)
+                return;
 
-   IEnumerator EndGameCoro()
-   {
-      playerBrain.ChangeState(PlayerStates.InMenu);
-      endedGame = true;
-      yield return new WaitForSeconds(endGameWait);
-      handOfGod.GrabPlayerCoro();
-   }
+            paused = !paused;
+            if (paused)
+            {
+                pausedObj.SetActive(true);
+                Time.timeScale = 0f;
+            }
+            else
+            {
+                pausedObj.SetActive(false);
+                Time.timeScale = 1f;
+            }
+        }
+    }
 
-   void OnDisable()
-   {
-      playerInput.AnnouncePause -= PauseUnpause;
-      handOfGod.AnnounceWarning -= FadeTextInOut;
-      mainMenu.AnnounceMainMenuState -= StartGame;
-      playerBrain.health.AnnounceDeath -= BENDROWNED;
-   }
+    private void FadeTextInOut()
+    {
+        StartCoroutine(FadeTextCoro());
+    }
+
+    private IEnumerator FadeTextCoro()
+    {
+        //fade in
+        for (float t = 0; t < fadeTime; t += Time.deltaTime)
+        {
+            godIsComingText.alpha = t / fadeTime;
+            yield return null;
+        }
+
+        godIsComingText.alpha = 1f;
+
+        //display
+        yield return new WaitForSeconds(displayTime);
+
+        //fade out
+        for (float t = 0; t < fadeTime; t += Time.deltaTime)
+        {
+            godIsComingText.alpha = 1f - (t / fadeTime);
+            yield return null;
+        }
+
+        godIsComingText.alpha = 0f;
+    }
+
+    public void EndGame()
+    {
+        if (!endedGame)
+            StartCoroutine(EndGameCoro());
+    }
+
+    IEnumerator EndGameCoro()
+    {
+        playerBrain.ChangeState(PlayerStates.InMenu);
+        endedGame = true;
+        yield return new WaitForSeconds(endGameWait);
+        handOfGod.GrabPlayerCoro();
+    }
+
+    void OnDisable()
+    {
+        playerInput.AnnouncePause -= PauseUnpause;
+        handOfGod.AnnounceWarning -= FadeTextInOut;
+        mainMenu.AnnounceMainMenuState -= StartGame;
+        playerBrain.health.AnnounceDeath -= BENDROWNED;
+    }
 }

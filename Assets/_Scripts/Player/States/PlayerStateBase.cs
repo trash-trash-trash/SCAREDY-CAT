@@ -8,4 +8,11 @@ public class PlayerStateBase : MonoBehaviour
     {
         playerBrain = GetComponentInParent<PlayerBrain>();
     }
+
+    public void FlipLookingForWallChecks(bool input)
+    {
+        playerBrain.lookingForWallChecks = input;
+        playerBrain.leftWallCheck.FlipLookingForTarget(input);
+        playerBrain.rightWallCheck.FlipLookingForTarget(input);
+    }
 }

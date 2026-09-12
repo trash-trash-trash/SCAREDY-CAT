@@ -17,6 +17,9 @@ public class PSIdle : PlayerStateBase
         playerBrain.playerAttack.AnnounceChargingAttack += ChangeAttackState;
         playerBrain.rb.isKinematic = false;
         playerBrain.health.FlipCanTakeDamage(true);
+        
+        if(!playerBrain.lookingForWallChecks)
+            FlipLookingForWallChecks(true);
     }
 
     private void ChangeAttackState(bool chargingAttack)

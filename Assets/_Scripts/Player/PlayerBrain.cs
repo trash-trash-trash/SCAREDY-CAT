@@ -42,6 +42,8 @@ public class PlayerBrain : MonoBehaviour
     public PlatformCollisionController platformCollisionController;
 
     public PickAndPlayRandomSound meow;
+
+    public bool lookingForWallChecks = true;
     
     public LayerCheck groundCheck;
     public LayerCheck leftWallCheck;
