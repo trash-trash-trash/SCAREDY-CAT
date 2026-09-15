@@ -18,7 +18,7 @@ public class PSStickToWall : PlayerStateBase
     private void ChangeState(bool chargingJump)
     {
         //fall down if holding down
-        if(playerBrain.playerMovement.moveInput.y < deadZone)
+        if (playerBrain.playerMovement.moveInput.y < deadZone)
         {
             if (chargingJump)
             {
