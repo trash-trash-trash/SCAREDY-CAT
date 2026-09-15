@@ -30,5 +30,8 @@ public class PSChargingWallJump : PlayerStateBase
     {
         playerBrain.playerJump.AnnounceChargingJump -= ChangeState;
         playerBrain.rb.useGravity = true;
+        
+        if(playerBrain.chargingJumpControl)
+            playerBrain.playerMovement.readingUpDown = false;
     }
 }
