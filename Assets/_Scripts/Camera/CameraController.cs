@@ -8,6 +8,9 @@ public class CameraController : MonoBehaviour
 
     public Transform target;
 
+    private Transform trackedPlayer;
+    private CameraRoomTrigger currentRoom;
+
     private void Awake()
     {
         Instance = this;
@@ -18,15 +21,28 @@ public class CameraController : MonoBehaviour
         if (target == null)
             return;
 
+        Vector3 targetPosition = target.position;
+
+        if (currentRoom != null && currentRoom.isTracker && trackedPlayer != null)
+        {
+            if (currentRoom.trackAxis == CameraRoomTrigger.TrackAxis.LeftRight)
+                targetPosition.x = trackedPlayer.position.x;
+
+            if (currentRoom.trackAxis == CameraRoomTrigger.TrackAxis.UpDown)
+                targetPosition.y = trackedPlayer.position.y;
+        }
+
         transform.position = Vector3.Lerp(
             transform.position,
-            target.position,
+            targetPosition,
             moveSpeed * Time.deltaTime
         );
     }
 
-    public void MoveToRoom(Transform roomPosition)
+    public void MoveToRoom(Transform roomPosition, CameraRoomTrigger room, Transform player)
     {
         target = roomPosition;
+        currentRoom = room;
+        trackedPlayer = player;
     }
 }
