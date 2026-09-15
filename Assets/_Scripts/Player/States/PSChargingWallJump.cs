@@ -28,6 +28,7 @@ public class PSChargingWallJump : PlayerStateBase
 
     void OnDisable()
     {
+        playerBrain.playerJump.FlipCanJump(false);
         playerBrain.playerJump.AnnounceChargingJump -= ChangeState;
         playerBrain.rb.useGravity = true;
         

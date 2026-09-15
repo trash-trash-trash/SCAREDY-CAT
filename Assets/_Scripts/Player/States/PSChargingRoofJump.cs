@@ -6,8 +6,8 @@ public class PSChargingRoofJump : PlayerStateBase
     {
         base.OnEnable();
         playerBrain.playerJump.FlipInvertedJump(true);
-        playerBrain.rb.angularVelocity = Vector3.zero;
-        playerBrain.rb.linearVelocity = Vector3.zero;
+        // playerBrain.rb.angularVelocity = Vector3.zero;
+        // playerBrain.rb.linearVelocity = Vector3.zero;
         playerBrain.playerMovement.readingLeftRight = false;
         playerBrain.playerMovement.readingUpDown = false;
         playerBrain.playerJump.AnnounceChargingJump += ChangeState;

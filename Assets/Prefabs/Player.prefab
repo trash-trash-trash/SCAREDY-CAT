@@ -438,6 +438,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBrain
   maxSpeed: 50
+  airControl: 0
+  chargingJumpControl: 0
   originalCheckPoint: {fileID: 0}
   mostRecentCheckPoint: {fileID: 0}
   health: {fileID: 3285464024608032691}
@@ -447,6 +449,7 @@ MonoBehaviour:
   playerJump: {fileID: 2393563587163485447}
   platformCollisionController: {fileID: 6149934137114707106}
   meow: {fileID: 0}
+  lookingForWallChecks: 1
   groundCheck: {fileID: 8980497948031161952}
   leftWallCheck: {fileID: 1274297654669487349}
   rightWallCheck: {fileID: 6343487755325947788}
@@ -541,6 +544,8 @@ MonoBehaviour:
   maxJumpPower: 150
   minHorizontalPower: 50
   maxHorizontalPower: 150
+  verticalMultiplier: 1
+  neutralJumpVerticalMultiplier: 1.5
   chargeTime: 1
   canJump: 0
   chargingJump: 0
@@ -880,6 +885,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   targetLayerDetected: 0
+  lookingForTarget: 1
 --- !u!1 &1449614536518860563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,6 +1123,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   targetLayerDetected: 0
+  lookingForTarget: 1
 --- !u!1 &2057182083068255508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,6 +1264,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2944
   targetLayerDetected: 0
+  lookingForTarget: 1
 --- !u!1 &2993503232138776029
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,7 +1336,7 @@ Transform:
   m_GameObject: {fileID: 3403407241781054392}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0, z: 0}
+  m_LocalPosition: {x: -0.66, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1352,6 +1360,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   targetLayerDetected: 0
+  lookingForTarget: 1
 --- !u!1 &3687619554552654949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,6 +1630,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   targetLayerDetected: 0
+  lookingForTarget: 1
 --- !u!1 &5518011235266464150
 GameObject:
   m_ObjectHideFlags: 0
@@ -2007,6 +2017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PSStickToWall
   playerBrain: {fileID: 0}
+  deadZone: 0
 --- !u!1 &7143090737710602478
 GameObject:
   m_ObjectHideFlags: 0
