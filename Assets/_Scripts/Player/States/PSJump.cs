@@ -24,6 +24,9 @@ public class PSJump : PlayerStateBase
     {
         if (!leftGround)
             return;
+
+        if (playerBrain.airControl && !playerBrain.playerMovement.readingLeftRight)
+            playerBrain.playerMovement.readingLeftRight = true;
         
         //wall checks
         if(playerBrain.leftWallCheck.targetLayerDetected )

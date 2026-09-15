@@ -28,6 +28,10 @@ public enum PlayerStates
 public class PlayerBrain : MonoBehaviour
 {
     public float maxSpeed = 10f;
+
+    public bool airControl = false;
+    public bool chargingPausesMovement = false;
+    
     public CheckPoint originalCheckPoint;
     public CheckPoint mostRecentCheckPoint;
     

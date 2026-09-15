@@ -10,6 +10,9 @@ public class PlayerJump : MonoBehaviour
     
     [SerializeField] private float minHorizontalPower = 2f;
     [SerializeField] private float maxHorizontalPower = 10f;
+
+    public float verticalMultiplier = 1f;
+    public float neutralJumpVerticalMultiplier = 1.5f;
     
     [SerializeField] private float chargeTime = 1f;
     
@@ -99,8 +102,8 @@ public class PlayerJump : MonoBehaviour
             return;
 
         chargingJump = false;
-        
-        float verticalMultiplier = 1.5f;
+
+        float newVerticalMultiplier = verticalMultiplier;
 
         float chargePercent = Mathf.Clamp01(chargeTimer / chargeTime);
 
@@ -127,14 +130,14 @@ public class PlayerJump : MonoBehaviour
         if (Mathf.Abs(moveInput.x) < 0.01f)
         {
             horizontalDirection = 0f;
-            verticalMultiplier = 1.8f;
+            newVerticalMultiplier = neutralJumpVerticalMultiplier;
         }
 
         float verticalDirection = invertedJump ? -1f : 1f;
 
         Vector3 force = new Vector3(
             horizontalDirection * horizontalPower,
-            verticalPower * verticalMultiplier * verticalDirection,
+            verticalPower * newVerticalMultiplier * verticalDirection,
             0f
         );
 

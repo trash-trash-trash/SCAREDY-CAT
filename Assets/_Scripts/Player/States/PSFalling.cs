@@ -9,7 +9,9 @@ public class PSFalling: PlayerStateBase
         playerBrain.rb.useGravity = true;
         playerBrain.playerJump.FlipCanJump(false);
         playerBrain.playerMovement.readingUpDown = false;
-        playerBrain.playerMovement.readingLeftRight = false;
+        
+        if(!playerBrain.airControl)
+            playerBrain.playerMovement.readingLeftRight = false;
     }
 
     void Update()
