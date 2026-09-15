@@ -183043,6 +183043,10 @@ PrefabInstance:
       propertyPath: originalCheckPoint
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1371361712377967622, guid: e4045960e67354544ad381d54206b844, type: 3}
+      propertyPath: chargingPausesMovement
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1483654517821678482, guid: e4045960e67354544ad381d54206b844, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

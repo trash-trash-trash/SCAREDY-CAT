@@ -9,7 +9,7 @@ public class PSChargeJump : PlayerStateBase
         playerBrain.rb.angularVelocity = Vector3.zero;
         playerBrain.rb.linearVelocity = Vector3.zero;
         
-        if(playerBrain.chargingPausesMovement)
+        if(!playerBrain.chargingJumpControl)
           playerBrain.playerMovement.readingLeftRight = false;
         
         playerBrain.playerJump.AnnounceChargingJump += ChangeState;
