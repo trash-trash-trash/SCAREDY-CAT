@@ -14,8 +14,8 @@ public class PSChargeAttack : PlayerStateBase
 
     private void ChangeState(bool chargingAttack)
     {
-        if(!chargingAttack)
-            playerBrain.ChangeState(PlayerStates.Attacking);
+        // if(!chargingAttack)
+        //     playerBrain.ChangeState(PlayerStates.Attacking);
     }
  
     void OnDisable()

@@ -14,7 +14,7 @@ public class PSIdle : PlayerStateBase
         playerBrain.playerMovement.readingUpDown = false;
         playerBrain.playerMovement.readingLeftRight = true;
         playerBrain.playerJump.AnnounceChargingJump += ChangeJumpState;
-        playerBrain.playerAttack.AnnounceChargingAttack += ChangeAttackState;
+        // playerBrain.playerAttack.AnnounceChargingAttack += ChangeAttackState;
         playerBrain.rb.isKinematic = false;
         playerBrain.health.FlipCanTakeDamage(true);
         
@@ -24,8 +24,8 @@ public class PSIdle : PlayerStateBase
 
     private void ChangeAttackState(bool chargingAttack)
     {
-        if (chargingAttack)
-            playerBrain.ChangeState(PlayerStates.ChargingAttack);
+        // if (chargingAttack)
+        //     playerBrain.ChangeState(PlayerStates.ChargingAttack);
     }
 
     private void ChangeJumpState(bool chargingJump)
@@ -58,7 +58,7 @@ public class PSIdle : PlayerStateBase
 
     void OnDisable()
     {
-        playerBrain.playerAttack.AnnounceChargingAttack -= ChangeAttackState;
+        //playerBrain.playerAttack.AnnounceChargingAttack -= ChangeAttackState;
         playerBrain.playerJump.AnnounceChargingJump -= ChangeJumpState;
     }
 }

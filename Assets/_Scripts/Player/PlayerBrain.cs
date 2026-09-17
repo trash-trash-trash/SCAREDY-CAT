@@ -8,8 +8,8 @@ public enum PlayerStates
     Idle,
     InMenu,
     Walking,
-    ChargingAttack,
-    Attacking,
+    // ChargingAttack,
+    // Attacking,
     ChargingJump,
     Jumping,
     Falling,
@@ -114,8 +114,8 @@ public class PlayerBrain : MonoBehaviour
     {
         statesDict.Add(PlayerStates.Idle, idleObj);
         statesDict.Add(PlayerStates.InMenu, inMenuObj);
-        statesDict.Add(PlayerStates.ChargingAttack, chargingAttackObj);
-        statesDict.Add(PlayerStates.Attacking, attackObj);
+        // statesDict.Add(PlayerStates.ChargingAttack, chargingAttackObj);
+        // statesDict.Add(PlayerStates.Attacking, attackObj);
         statesDict.Add(PlayerStates.Walking, walkingObj);
         statesDict.Add(PlayerStates.ChargingJump, chargingJumpObj);
         statesDict.Add(PlayerStates.Jumping, jumpingObj);

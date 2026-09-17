@@ -10,10 +10,9 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float maxAttackPower = 20f;
     [SerializeField] private float chargeTime = 1f;
 
-    private float minAttackRadius = 1f;
+    private float minAttackRadius = 3f;
 
-    [SerializeField] private float maxAttackRadius = 4f;
-    [SerializeField] private float attackOffset = 1f;
+    [SerializeField] private float maxAttackRadius = 7f;
 
     [SerializeField] private int attackDamage = -100;
 
@@ -25,7 +24,6 @@ public class PlayerAttack : MonoBehaviour
     public PlayerInputs inputHandler;
     public PlayerMovement playerMovement;
 
-    public float lastAttackDirection = 1f;
     public bool canAttack = true;
 
     private Vector2 moveInput;
@@ -38,7 +36,7 @@ public class PlayerAttack : MonoBehaviour
 
     private HashSet<Health> hitTargets = new HashSet<Health>();
     private Coroutine attackCoroutine;
-    
+
     private Collider[] attackResults;
 
     private Coroutine attackVisualCoroutine;
@@ -51,19 +49,9 @@ public class PlayerAttack : MonoBehaviour
         attackResults = new Collider[maxTargets];
     }
 
-    private void OnEnable()
-    {
-        inputHandler.AnnounceAttackAction += HandleAttack;
-    }
-
     private void Update()
     {
         moveInput = inputHandler.moveInput;
-
-        if (Mathf.Abs(moveInput.x) > 0.01f)
-        {
-            lastAttackDirection = Mathf.Sign(playerMovement.facingDirection);
-        }
 
         if (chargingAttack)
         {
@@ -86,23 +74,7 @@ public class PlayerAttack : MonoBehaviour
         canAttack = input;
     }
 
-    private void HandleAttack(InputAction.CallbackContext context)
-    {
-        if (!canAttack)
-            return;
-
-        if (context.performed)
-        {
-            StartCharging();
-        }
-
-        if (context.canceled)
-        {
-            ReleaseAttack();
-        }
-    }
-
-    private void StartCharging()
+    public void StartCharging()
     {
         chargingAttack = true;
         chargeTimer = 0f;
@@ -111,7 +83,7 @@ public class PlayerAttack : MonoBehaviour
         AnnounceChargingAttack?.Invoke(true);
     }
 
-    private void ReleaseAttack()
+    public void ReleaseAttack()
     {
         if (!chargingAttack)
             return;
@@ -128,9 +100,7 @@ public class PlayerAttack : MonoBehaviour
             chargePercent
         );
 
-        Vector3 attackDirection = Vector3.right * lastAttackDirection;
-
-        PerformAttack(attackDirection, attackPower);
+        PerformAttack(attackPower);
 
         chargeTimer = 0f;
         attackPower = minAttackPower;
@@ -138,7 +108,8 @@ public class PlayerAttack : MonoBehaviour
         AnnounceChargingAttack?.Invoke(false);
     }
 
-    private void PerformAttack(Vector3 direction, float power)
+
+    private void PerformAttack(float power)
     {
         float chargePercent = Mathf.InverseLerp(
             minAttackPower,
@@ -152,59 +123,92 @@ public class PlayerAttack : MonoBehaviour
             chargePercent
         );
 
-        Vector3 attackCenter = transform.position
-                               + direction * attackOffset;
+        // Reset targets for this new attack
+        hitTargets.Clear();
 
-        int hitCount = Physics.OverlapSphereNonAlloc(
-            attackCenter,
-            attackRadius,
-            attackResults,
-            attackLayers
+        // Start the attack over time
+        if (attackCoroutine != null)
+            StopCoroutine(attackCoroutine);
+
+        attackCoroutine = StartCoroutine(
+            PerformAttackCoroutine(attackRadius)
         );
 
-        for (int i = 0; i < hitCount; i++)
-        {
-            Collider hit = attackResults[i];
-
-            Health health = hit.GetComponent<Health>();
-
-            if (health == null)
-                continue;
-
-            health.ChangeHealth(attackDamage);
-            // Debug.Log("Changed " + hit.name + " health by " + attackDamage);
-        }
-        ShowAttackVisual(attackCenter);
-        //
-        // Debug.Log(
-        //     $"Attack! Direction: {direction}, Power: {power}, Radius: {attackRadius}, Hits: {hitCount}"
-        // );
+        ShowAttackVisual();
     }
 
-    private void ShowAttackVisual(Vector3 position)
+    private IEnumerator PerformAttackCoroutine(float attackRadius)
+    {
+        float timer = 0f;
+
+        while (timer < attackDuration)
+        {
+            // Always use the player's current position
+            Vector3 attackCenter = transform.position;
+
+            int hitCount = Physics.OverlapSphereNonAlloc(
+                attackCenter,
+                attackRadius,
+                attackResults,
+                attackLayers
+            );
+
+            for (int i = 0; i < hitCount; i++)
+            {
+                Collider hit = attackResults[i];
+
+                Health health = hit.GetComponent<Health>();
+
+                if (health == null)
+                    continue;
+
+                // Only damage each target once during this attack
+                if (hitTargets.Contains(health))
+                    continue;
+
+                hitTargets.Add(health);
+
+                health.ChangeHealth(attackDamage);
+            }
+
+            timer += Time.deltaTime;
+
+            yield return null;
+        }
+
+        attackCoroutine = null;
+        hitTargets.Clear();
+    }
+
+
+    private void ShowAttackVisual()
     {
         if (attackVisualCoroutine != null)
             StopCoroutine(attackVisualCoroutine);
 
         attackVisualCoroutine = StartCoroutine(
-            ShowAttackVisualCoroutine(position)
+            ShowAttackVisualCoroutine()
         );
     }
 
-    private IEnumerator ShowAttackVisualCoroutine(Vector3 position)
+
+    private IEnumerator ShowAttackVisualCoroutine()
     {
-        attackVisual.transform.position = position;
         attackVisual.SetActive(true);
 
-        yield return new WaitForSeconds(attackVisualTime);
+        float timer = 0f;
+
+        while (timer < attackVisualTime)
+        {
+            // Keep the visual centered on the player
+            attackVisual.transform.position = transform.position;
+
+            timer += Time.deltaTime;
+
+            yield return null;
+        }
 
         attackVisual.SetActive(false);
         attackVisualCoroutine = null;
-    }
-
-
-    private void OnDisable()
-    {
-        inputHandler.AnnounceAttackAction -= HandleAttack;
     }
 }

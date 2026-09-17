@@ -11,7 +11,7 @@ public class PSRun : PlayerStateBase
         playerBrain.playerMovement.readingUpDown = false;
         playerBrain.playerMovement.readingLeftRight = true;
         playerBrain.playerJump.AnnounceChargingJump += ChangeState;
-        playerBrain.playerAttack.AnnounceChargingAttack += ChangeAttackState;
+        //playerBrain.playerAttack.AnnounceChargingAttack += ChangeAttackState;
         
         if(!playerBrain.lookingForWallChecks)
             FlipLookingForWallChecks(true);
@@ -19,8 +19,8 @@ public class PSRun : PlayerStateBase
     
     private void ChangeAttackState(bool chargingAttack)
     {
-        if(chargingAttack)
-            playerBrain.ChangeState(PlayerStates.ChargingAttack);
+        // if(chargingAttack)
+        //     playerBrain.ChangeState(PlayerStates.ChargingAttack);
     }
     
     private void ChangeState(bool chargingJump)
@@ -41,6 +41,6 @@ public class PSRun : PlayerStateBase
     void OnDisable()
     {
         playerBrain.playerJump.AnnounceChargingJump -= ChangeState;
-        playerBrain.playerAttack.AnnounceChargingAttack -= ChangeAttackState;
+       // playerBrain.playerAttack.AnnounceChargingAttack -= ChangeAttackState;
     }
 }

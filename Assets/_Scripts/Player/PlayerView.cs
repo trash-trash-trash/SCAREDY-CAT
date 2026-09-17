@@ -48,8 +48,8 @@ public class PlayerView : MonoBehaviour
         animationClipsDict.Add(PlayerStates.Idle, idleClip);
         animationClipsDict.Add(PlayerStates.Walking, walkingClip);
         animationClipsDict.Add(PlayerStates.Jumping, jumpingClip);
-        animationClipsDict.Add(PlayerStates.ChargingAttack, chargingAttackClip);
-        animationClipsDict.Add(PlayerStates.Attacking, attackingClip);
+        // animationClipsDict.Add(PlayerStates.ChargingAttack, chargingAttackClip);
+        // animationClipsDict.Add(PlayerStates.Attacking, attackingClip);
         animationClipsDict.Add(PlayerStates.ChargingJump, chargeJumpClip);
         animationClipsDict.Add(PlayerStates.Falling, fallingClip);
         animationClipsDict.Add(PlayerStates.StickingToWall, climbingClip);
