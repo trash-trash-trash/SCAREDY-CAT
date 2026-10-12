@@ -10,6 +10,5 @@ public class PSInMenu : PlayerStateBase
         playerBrain.rb.useGravity = false;
         playerBrain.playerMovement.readingUpDown = false;
         playerBrain.playerMovement.readingLeftRight = false;
-        playerBrain.playerAttack.FlipCanAttack(false);
     }
 }

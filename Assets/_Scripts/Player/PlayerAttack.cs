@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private float minAttackPower = 5f;
-    [SerializeField] private float maxAttackPower = 20f;
-    [SerializeField] private float chargeTime = 1f;
+    public float minAttackPower = 5f;
+    public float maxAttackPower = 20f;
+    public float chargeTime = 1f;
 
     private float minAttackRadius = 3f;
 
-    [SerializeField] private float maxAttackRadius = 7f;
+    public float maxAttackRadius = 7f;
 
     [SerializeField] private int attackDamage = -100;
 
@@ -32,7 +32,7 @@ public class PlayerAttack : MonoBehaviour
     public float chargeTimer;
     public float attackPower;
 
-    [SerializeField] private float attackDuration = 0.3f;
+    public float attackDuration = 0.3f;
 
     private HashSet<Health> hitTargets = new HashSet<Health>();
     private Coroutine attackCoroutine;
@@ -43,6 +43,8 @@ public class PlayerAttack : MonoBehaviour
 
     // true = charging, false = released
     public event Action<bool> AnnounceChargingAttack;
+
+    public event Action<bool> AnnounceAttacking;
 
     private void Awake()
     {
@@ -133,12 +135,11 @@ public class PlayerAttack : MonoBehaviour
         attackCoroutine = StartCoroutine(
             PerformAttackCoroutine(attackRadius)
         );
-
-        ShowAttackVisual();
     }
 
     private IEnumerator PerformAttackCoroutine(float attackRadius)
     {
+        AnnounceAttacking?.Invoke(true);
         float timer = 0f;
 
         while (timer < attackDuration)
@@ -178,37 +179,6 @@ public class PlayerAttack : MonoBehaviour
 
         attackCoroutine = null;
         hitTargets.Clear();
-    }
-
-
-    private void ShowAttackVisual()
-    {
-        if (attackVisualCoroutine != null)
-            StopCoroutine(attackVisualCoroutine);
-
-        attackVisualCoroutine = StartCoroutine(
-            ShowAttackVisualCoroutine()
-        );
-    }
-
-
-    private IEnumerator ShowAttackVisualCoroutine()
-    {
-        attackVisual.SetActive(true);
-
-        float timer = 0f;
-
-        while (timer < attackVisualTime)
-        {
-            // Keep the visual centered on the player
-            attackVisual.transform.position = transform.position;
-
-            timer += Time.deltaTime;
-
-            yield return null;
-        }
-
-        attackVisual.SetActive(false);
-        attackVisualCoroutine = null;
+        AnnounceAttacking?.Invoke(false);
     }
 }

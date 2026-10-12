@@ -13,7 +13,6 @@ public class PSUnhide : PlayerStateBase
     {
         base.OnEnable();
         playerBrain.canHide = false;
-        playerBrain.playerAttack.FlipCanAttack(false);
         playerBrain.rb.useGravity = false;
         playerBrain.hiding = true;
         playerBrain.playerJump.FlipCanJump(false);
@@ -56,6 +55,7 @@ public class PSUnhide : PlayerStateBase
     private void OnDisable()
     {
         playerBrain.health.FlipCanTakeDamage(true);
+        playerBrain.playerAttack.FlipCanAttack(true);
         playerBrain.rb.useGravity = true;
         playerBrain.hiding = false;
     }

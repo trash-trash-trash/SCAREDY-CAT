@@ -5,7 +5,6 @@ public class PSRun : PlayerStateBase
     public override void OnEnable()
     {
         base.OnEnable();
-        playerBrain.playerAttack.FlipCanAttack(true);
         playerBrain.playerJump.FlipCanJump(true);
         playerBrain.rb.useGravity = true;
         playerBrain.playerMovement.readingUpDown = false;

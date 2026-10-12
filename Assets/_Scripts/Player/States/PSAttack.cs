@@ -4,6 +4,7 @@ using UnityEngine;
 public class PSAttack : PlayerStateBase
 {
     public float attackDuration = 0.3f;
+    
     public override void OnEnable()
     {
         base.OnEnable();
@@ -13,7 +14,7 @@ public class PSAttack : PlayerStateBase
 
     IEnumerator AttackTime()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(attackDuration);
         playerBrain.ChangeState(PlayerStates.Idle);
     }
 }
