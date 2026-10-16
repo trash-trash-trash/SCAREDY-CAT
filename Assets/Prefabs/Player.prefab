@@ -2030,6 +2030,7 @@ MonoBehaviour:
   hideClip: {fileID: 7400000, guid: ecb68ca8bcd90e945801326d401558cb, type: 2}
   playerSpriteAnchor: {fileID: 6083099147169911382}
   anchorPos: {x: 0, y: 0, z: 0}
+  material: {fileID: 2100000, guid: ce48f8a6c2879874cb8be34ecef5faf8, type: 2}
 --- !u!114 &8586596516774135314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2285,6 +2286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeowAttackBrain
   currentState: 0
   playerAttack: {fileID: 912075515894246914}
+  playerBrain: {fileID: 1371361712377967622}
   inputHandler: {fileID: 760805259577654629}
   idleObj: {fileID: 7896872535295735603}
   chargingObj: {fileID: 8107931568298640737}

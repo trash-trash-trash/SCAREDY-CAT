@@ -16,7 +16,7 @@ public class MeowAttackBrain : MonoBehaviour
 {
     public MeowAttackState currentState;
     public PlayerAttack playerAttack;
-    
+    public PlayerBrain playerBrain;
     public PlayerInputs inputHandler;
     
     public GameObject idleObj;

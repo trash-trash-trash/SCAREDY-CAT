@@ -42,6 +42,8 @@ public class PlayerView : MonoBehaviour
 
     public Vector3 anchorPos;
 
+    public Material material;
+
     void Awake()
     {
         originalColor = spriteRenderer.color;
@@ -69,14 +71,14 @@ public class PlayerView : MonoBehaviour
 
         lifeSlider.maxValue = playerBrain.health.maxHealth;
 
-        playerBrain.AnnounceHardFlip += HardFlip;
+        //  playerBrain.AnnounceHardFlip += HardFlip;
         playerBrain.AnnouncePlayerState += SetPlayerState;
         playerBrain.AnnounceCanHide += SetCanHidePrompt;
         //playerBrain.AnnounceHidden += FlipHiding;
         playerBrain.health.AnnounceCurrentHealth += SetHealth;
         playerBrain.AnnounceCanInvestigate += SetInvestigateText;
         anchorPos = playerSpriteAnchor.transform.localPosition;
-        playerBrain.AnnounceFlipSprite180 += FlipSprite180;
+        //   playerBrain.AnnounceFlipSprite180 += FlipSprite180;
     }
 
     private void FlipSprite180()
@@ -197,80 +199,84 @@ public class PlayerView : MonoBehaviour
 
     void Update()
     {
-        // These states should NOT update the sprite's facing direction.
-        // Whatever Y rotation the sprite currently has should be preserved.
-        //
-        // We DO reset Z to 0 because these states should not remain
-        // visually rotated onto the roof.
-        bool preserveFacing =
-            playerBrain.currentState == PlayerStates.ClimbingUpLedge ||
-            playerBrain.currentState == PlayerStates.Jumping ||
-            playerBrain.currentState == PlayerStates.TakeDamage ||
-            playerBrain.currentState == PlayerStates.Falling ||
-        playerBrain.currentState == PlayerStates.StickingToWall ||
-        playerBrain.currentState == PlayerStates.ChargingWallJump;
+        bool isFacingLeft = playerBrain.playerMovement.facingDirection != 1;
 
-        if (preserveFacing)
-        {
-            Vector3 rotation = spriteObj.transform.eulerAngles;
+        material.SetFloat("_FlipX", isFacingLeft ? 1f : 0f);
 
-            // Reset the roof rotation, but leave Y (facing) untouched.
-            rotation.z = 0f;
-
-            spriteObj.transform.eulerAngles = rotation;
-            return;
-        }
-
-
-        // Sticking to the roof uses the normal facing direction,
-        // but inverted because the player is upside down.
-        if (playerBrain.currentState == PlayerStates.StickingToRoof)
-        {
-            float yRotation =
-                playerBrain.playerMovement.facingDirection == 1f
-                    ? 180f
-                    : 0f;
-
-            spriteObj.transform.eulerAngles = new Vector3(
-                0f,
-                yRotation,
-                90f
-            );
-
-            return;
-        }
-
-
-        // Charging a roof jump uses the inverted facing direction,
-// with an additional 180° rotation on the Z axis.
-        if (playerBrain.currentState == PlayerStates.ChargingRoofJump)
-        {
-            float yRotation =
-                playerBrain.playerMovement.facingDirection == 1f
-                    ? 180f
-                    : 0f;
-
-            spriteObj.transform.eulerAngles = new Vector3(
-                0f,
-                yRotation,
-                180f
-            );
-
-            return;
-        }
-
-
-        // All other normal states use the player's facing direction.
-        float normalYRotation =
-            playerBrain.playerMovement.facingDirection == 1f
-                ? 0f
-                : 180f;
-
-        spriteObj.transform.eulerAngles = new Vector3(
-            0f,
-            normalYRotation,
-            0f
-        );
+//         // These states should NOT update the sprite's facing direction.
+//         // Whatever Y rotation the sprite currently has should be preserved.
+//         //
+//         // We DO reset Z to 0 because these states should not remain
+//         // visually rotated onto the roof.
+//         bool preserveFacing =
+//             playerBrain.currentState == PlayerStates.ClimbingUpLedge ||
+//             playerBrain.currentState == PlayerStates.Jumping ||
+//             playerBrain.currentState == PlayerStates.TakeDamage ||
+//             playerBrain.currentState == PlayerStates.Falling ||
+//         playerBrain.currentState == PlayerStates.StickingToWall ||
+//         playerBrain.currentState == PlayerStates.ChargingWallJump;
+//
+//         if (preserveFacing)
+//         {
+//             Vector3 rotation = spriteObj.transform.eulerAngles;
+//
+//             // Reset the roof rotation, but leave Y (facing) untouched.
+//             rotation.z = 0f;
+//
+//             spriteObj.transform.eulerAngles = rotation;
+//             return;
+//         }
+//
+//
+//         // Sticking to the roof uses the normal facing direction,
+//         // but inverted because the player is upside down.
+//         if (playerBrain.currentState == PlayerStates.StickingToRoof)
+//         {
+//             float yRotation =
+//                 playerBrain.playerMovement.facingDirection == 1f
+//                     ? 180f
+//                     : 0f;
+//
+//             spriteObj.transform.eulerAngles = new Vector3(
+//                 0f,
+//                 yRotation,
+//                 90f
+//             );
+//
+//             return;
+//         }
+//
+//
+//         // Charging a roof jump uses the inverted facing direction,
+// // with an additional 180° rotation on the Z axis.
+//         if (playerBrain.currentState == PlayerStates.ChargingRoofJump)
+//         {
+//             float yRotation =
+//                 playerBrain.playerMovement.facingDirection == 1f
+//                     ? 180f
+//                     : 0f;
+//
+//             spriteObj.transform.eulerAngles = new Vector3(
+//                 0f,
+//                 yRotation,
+//                 180f
+//             );
+//
+//             return;
+//         }
+//
+//
+//         // All other normal states use the player's facing direction.
+//         float normalYRotation =
+//             playerBrain.playerMovement.facingDirection == 1f
+//                 ? 0f
+//                 : 180f;
+//
+//         spriteObj.transform.eulerAngles = new Vector3(
+//             0f,
+//             normalYRotation,
+//             0f
+//         );
     }
 
     void OnDisable()

@@ -7,6 +7,8 @@ public class MeowAttack : MeowAttackBase
    {
       base.OnEnable();
       attackBrain.playerAttack.ReleaseAttack();
+      
+      attackBrain.playerBrain.meow.PlayRandom();
       StartCoroutine(WaitForAttackToEnd(attackBrain.playerAttack.attackVisualTime));
    }
 
